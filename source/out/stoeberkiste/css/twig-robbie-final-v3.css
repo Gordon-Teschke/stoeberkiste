@@ -2305,7 +2305,7 @@ body.cl-start .welcome-top .hello p a {
     background-color: #9d0001 !important;
 }
 
-@media (min-width: 1401px) {
+@media (min-width: 1400px) {
     .cart-fixed {
         top: auto !important;
         right: 0 !important;
@@ -2391,69 +2391,9 @@ body.cl-start .welcome-top .hello p a {
     max-width: 500px !important;
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1400px) {
-    body.cl-manufacturerlist .cart-fixed,
-    .cart-fixed {
-        position: fixed !important;
-        z-index: 999 !important;
-        top: auto !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 36px !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #e4e8e8 !important;
-        box-shadow: 0 -2px 4px rgba(0, 0, 0, .5) !important;
-    }
-
-    body.cl-manufacturerlist .cart-fixed .count-output,
-    .cart-fixed .count-output {
-        position: static !important;
-        float: right !important;
-        width: auto !important;
-        height: 32px !important;
-        margin: 2px 10px 0 !important;
-        padding: 0 !important;
-    }
-
-    body.cl-manufacturerlist .cart-fixed .count-output p,
-    .cart-fixed .count-output p {
-        width: 100% !important;
-        padding: 4px 10px 0 !important;
-    }
-
-    body.cl-manufacturerlist .cart-fixed .sk-cart-actions,
-    .cart-fixed .sk-cart-actions {
-        position: static !important;
-        float: right !important;
-        display: block !important;
-        width: auto !important;
-        height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    body.cl-manufacturerlist .cart-fixed .btn,
-    body.cl-manufacturerlist .cart-fixed .btn:hover,
-    body.cl-manufacturerlist .cart-fixed .btn:focus,
-    body.cl-manufacturerlist .cart-fixed .btn:active,
-    .cart-fixed .btn,
-    .cart-fixed .btn:hover,
-    .cart-fixed .btn:focus,
-    .cart-fixed .btn:active {
-        float: right !important;
-        width: auto !important;
-        min-width: 0 !important;
-        height: 32.4px !important;
-        margin: 2px 2px 0 10px !important;
-        padding: 4px 14px 6px !important;
-    }
-
-    body.cl-manufacturerlist .cart-fixed .to-contact,
-    .cart-fixed .to-contact {
-        margin-top: 2px !important;
+@media (max-width: 1399px) {
+    html body .cart-fixed {
+        display: none !important;
     }
 }
 
@@ -2499,7 +2439,7 @@ body.cl-manufacturerlist .sk-pia-page .pagination .page-link:focus {
     color: #fff !important;
 }
 
-@media (min-width: 1401px) {
+@media (min-width: 1400px) {
     html body .cart-fixed,
     html body.cl-manufacturerlist .cart-fixed,
     html body.cl-alist .cart-fixed,
@@ -2578,7 +2518,7 @@ body.cl-manufacturerlist .sk-pia-page .pagination .page-link:focus {
 
 }
 
-@media (min-width: 1401px) {
+@media (min-width: 1400px) {
     html body.cl-manufacturerlist .cart-fixed .count-output,
     html body.cl-alist .cart-fixed .count-output,
     html body.cl-details .cart-fixed .count-output,
@@ -3825,5 +3765,128 @@ html body.cl-user.is-checkout .sk-checkout-user-page #user_form #addressForm .fo
         padding: 5px 14px !important;
         font-size: 16px !important;
         line-height: 22px !important;
+    }
+}
+
+/* -------------------------------------------------------------------------
+   Product overview parity and intermediate desktop breakpoint
+   ------------------------------------------------------------------------- */
+@media (min-width: 1025px) {
+    .sk-list-body > .side-menu-complete.sk-side-menu {
+        flex: 0 0 260px !important;
+        width: 260px !important;
+        max-width: 260px !important;
+    }
+
+    .sk-list-body .sk-side-menu .categoryBox > .nav,
+    .sk-list-body .sk-side-menu .categoryBox > ol.nav,
+    .sk-list-body .sk-side-menu .all-brands,
+    .sk-list-body .sk-side-menu .shop-info {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .sk-list-body .sk-side-menu .categoryBox .nav-item,
+    .sk-list-body .sk-side-menu .all-brands > li,
+    .sk-list-body .sk-side-menu .shop-info > li {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        font-size: 18px !important;
+        line-height: 25.2px !important;
+    }
+
+    .sk-list-body .sk-side-menu .sidebar-header,
+    .sk-list-body .sk-side-menu .all-brands > li:first-child {
+        min-height: 46px !important;
+        padding: 10px !important;
+        font-size: 18px !important;
+        line-height: 25.2px !important;
+    }
+
+    .sk-list-body .sk-side-menu .categoryBox .nav-link,
+    .sk-list-body .sk-side-menu .all-brands > li > a,
+    .sk-list-body .sk-side-menu .shop-info > li > a {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 45px !important;
+        margin: 0 !important;
+        padding: 10px !important;
+        color: #285479 !important;
+        font-size: 18px !important;
+        line-height: 25.2px !important;
+    }
+
+    .sk-list-body .sk-side-menu .categoryBox .nav .nav .nav-link {
+        padding-left: 20px !important;
+    }
+
+    .sk-list-body .sk-side-menu .categoryBox > .nav > .nav-item.active > .nav-link,
+    .sk-list-body .sk-side-menu .categoryBox > .nav > .nav-item.exp > .nav-link {
+        background: #ebe9e9 !important;
+        color: #285479 !important;
+    }
+
+    .sk-product-list-panel > .sk-user-meta {
+        justify-content: flex-start !important;
+        margin-bottom: 24px !important;
+    }
+
+    .sk-product-list-panel > .sk-list-intro {
+        margin-bottom: 30px !important;
+    }
+
+    .sk-product-list-panel .sk-list-intro .categoryDescription,
+    .sk-product-list-panel .sk-list-intro .categoryDescription p {
+        font-size: 18px !important;
+        line-height: 20px !important;
+    }
+
+    .sk-product-list-panel .sk-product-line-image {
+        flex-basis: 102px !important;
+        width: 102px !important;
+        height: 102px !important;
+        margin-right: 12px !important;
+    }
+
+    .sk-product-list-panel .sk-product-line-image img {
+        width: 102px !important;
+        max-width: 102px !important;
+        height: 102px !important;
+    }
+
+    .sk-product-list-panel .sk-product-line-title,
+    .sk-product-list-panel .sk-product-line-title a {
+        color: #1d1d1d !important;
+        font-size: 18px !important;
+        line-height: 20px !important;
+    }
+
+    .sk-product-list-panel .sk-product-line-price {
+        font-size: 18px !important;
+        line-height: 20px !important;
+    }
+
+    .sk-product-list-panel .sk-product-line-vat {
+        margin-top: 3px !important;
+        font-size: 14px !important;
+        line-height: 19.6px !important;
+        text-align: right !important;
+    }
+
+    .sk-product-list-panel .sk-product-line-actions {
+        bottom: 12px !important;
+    }
+
+    .sk-product-list-panel .sk-product-line-details,
+    .sk-product-list-panel .sk-product-line .listRemoveButton {
+        min-width: 0 !important;
+        min-height: 32.4px !important;
+        padding: 4px 14px 6px !important;
+        font-size: 16px !important;
+        line-height: 22.4px !important;
     }
 }
