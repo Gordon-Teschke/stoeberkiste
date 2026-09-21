@@ -7,6 +7,7 @@
     {% set oUnitPrice = product.getUnitPrice() %}
     {% set tprice = product.getTPrice() %}
     {% set price = product.getPrice() %}
+    {% set skGrossPrice = price ? price.getBruttoPrice() : 0 %}
     {% set testid = oView.getIndex() %}
     {% if showMainLink %}
         {% set _productLink = product.getMainLink() %}
@@ -154,6 +155,9 @@
                             <p id="productPricePerUnit_{{ testid }}" class="pricePerUnit">
                                 {{ format_price(oUnitPrice, { currency: currency }) }}/{{ product.getUnitName() }}
                             </p>
+                        {% endif %}
+                        {% if product.getPrice() %}
+                            <small class="sk-product-grid-vat">inkl. 19 % Mwst. {% if skGrossPrice < 50 %}zzgl. <a href="/Versand-Kosten/">Versandkosten</a>{% else %}&middot; Versandkostenfrei{% endif %}</small>
                         {% endif %}
                     {% endblock %}
                 </div>

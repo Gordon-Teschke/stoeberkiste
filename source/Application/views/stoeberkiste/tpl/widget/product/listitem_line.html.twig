@@ -36,24 +36,27 @@
                     </p>
                 {% endblock %}
 
-                {% block widget_product_listitem_line_price %}
-                    {% hasrights { ident: "SHOWARTICLEPRICE" } %}
-                        {% set tprice = product.getTPrice() %}
-                        {% set price = product.getPrice() %}
-                        <p class="item-price sk-product-line-price">
-                            {% if tprice and tprice.getBruttoPrice() > price.getBruttoPrice() %}
-                                <del>{{ format_price(tprice, { currency: currency }) }}</del>&nbsp;&middot;
-                            {% endif %}
-                            {% if product.isRangePrice() %}
-                                {{ translate({ ident: "PRICE_FROM" }) }}
-                                {% set displayPrice = product.isParentNotBuyable() ? product.getVarMinPrice() : product.getMinPrice() %}
-                            {% else %}
-                                {% set displayPrice = product.isParentNotBuyable() ? product.getVarMinPrice() : product.getPrice() %}
-                            {% endif %}
-                            {{ format_price(displayPrice, { currency: currency }) }}
-                        </p>
-                    {% endhasrights %}
-                {% endblock %}
+                <div class="sk-product-line-price-block">
+                    {% block widget_product_listitem_line_price %}
+                        {% hasrights { ident: "SHOWARTICLEPRICE" } %}
+                            {% set tprice = product.getTPrice() %}
+                            {% set price = product.getPrice() %}
+                            <p class="item-price sk-product-line-price">
+                                {% if tprice and tprice.getBruttoPrice() > price.getBruttoPrice() %}
+                                    <del>{{ format_price(tprice, { currency: currency }) }}</del>&nbsp;&middot;
+                                {% endif %}
+                                {% if product.isRangePrice() %}
+                                    {{ translate({ ident: "PRICE_FROM" }) }}
+                                    {% set displayPrice = product.isParentNotBuyable() ? product.getVarMinPrice() : product.getMinPrice() %}
+                                {% else %}
+                                    {% set displayPrice = product.isParentNotBuyable() ? product.getVarMinPrice() : product.getPrice() %}
+                                {% endif %}
+                                {{ format_price(displayPrice, { currency: currency }) }}
+                            </p>
+                            <small class="sk-product-line-vat">inkl. 19 % Mwst. {% if skGrossPrice < 50 %}zzgl. <a href="/Versand-Kosten/">Versandkosten</a>{% else %}&middot; Versandkostenfrei{% endif %}</small>
+                        {% endhasrights %}
+                    {% endblock %}
+                </div>
             </div>
 
             {% block widget_product_listitem_line_description %}
@@ -63,8 +66,6 @@
             {% endblock %}
 
             <div class="sk-product-line-actions">
-                <small class="sk-product-line-vat">inkl. 19 % Mwst. {% if skGrossPrice < 50 %}zzgl. <a href="/Versand-Kosten/">Versandkosten</a>{% else %}&middot; Versandkostenfrei{% endif %}</small>
-
                 {% block widget_product_listitem_line_selections %}
                     {% if aVariantSelections and aVariantSelections.selections %}
                         <form class="sk-product-line-selection" action="{{ _productLink|raw }}" method="get">

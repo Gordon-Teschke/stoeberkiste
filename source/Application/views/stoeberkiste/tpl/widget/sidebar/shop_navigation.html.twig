@@ -3,6 +3,7 @@
   The markup deliberately follows the legacy Smarty theme because style.css
   already contains the pixel-near desktop/mobile rules for these classes.
 #}
+{% set skNavigationTitle = oView.getTitle()|striptags|trim %}
 <aside class="side-menu-complete sk-side-menu" aria-label="Shopnavigation">
     <div class="shop-menu">
         {{ include_widget({
@@ -21,15 +22,15 @@
     <div class="shop-menu sk-brand-menu">
         <ul class="all-brands">
             <li>Nach Marken</li>
-            <li><a href="/Nach-Hersteller/Faerg-Form/">F&auml;rg &amp; Form</a></li>
-            <li><a href="/Nach-Hersteller/Holmegaard/">Holmegaard</a></li>
-            <li><a href="/Nach-Hersteller/Kay-Bojesen/">Kay Bojesen</a></li>
-            <li><a href="/Nach-Hersteller/Kortkartellet/">Kortkartellet</a></li>
-            <li><a href="/Nach-Hersteller/Livingly/">Livingly</a></li>
-            <li><a href="/Nach-Hersteller/Marimekko/">Marimekko</a></li>
-            <li><a href="/Nach-Hersteller/Pia-Malmros/">Pia Malmros</a></li>
-            <li><a href="/Nach-Hersteller/Pluto-Produkter/">Pluto Produkter</a></li>
-            <li><a href="/Nach-Hersteller/Roros-Tweed/">R&oslash;ros-Tweed</a></li>
+            <li><a href="/Nach-Hersteller/Faerg-Form/"{% if skNavigationTitle in ['Färg & Form', 'Faerg & Form'] %} class="act" aria-current="page"{% endif %}>F&auml;rg &amp; Form</a></li>
+            <li><a href="/Nach-Hersteller/Holmegaard/"{% if skNavigationTitle == 'Holmegaard' %} class="act" aria-current="page"{% endif %}>Holmegaard</a></li>
+            <li><a href="/Nach-Hersteller/Kay-Bojesen/"{% if skNavigationTitle == 'Kay Bojesen' %} class="act" aria-current="page"{% endif %}>Kay Bojesen</a></li>
+            <li><a href="/Nach-Hersteller/Kortkartellet/"{% if skNavigationTitle == 'Kortkartellet' %} class="act" aria-current="page"{% endif %}>Kortkartellet</a></li>
+            <li><a href="/Nach-Hersteller/Livingly/"{% if skNavigationTitle == 'Livingly' %} class="act" aria-current="page"{% endif %}>Livingly</a></li>
+            <li><a href="/Nach-Hersteller/Marimekko/"{% if skNavigationTitle == 'Marimekko' %} class="act" aria-current="page"{% endif %}>Marimekko</a></li>
+            <li><a href="/Nach-Hersteller/Pia-Malmros/"{% if skNavigationTitle == 'Pia Malmros' %} class="act" aria-current="page"{% endif %}>Pia Malmros</a></li>
+            <li><a href="/Nach-Hersteller/Pluto-Produkter/"{% if skNavigationTitle == 'Pluto Produkter' %} class="act" aria-current="page"{% endif %}>Pluto Produkter</a></li>
+            <li><a href="/Nach-Hersteller/Roros-Tweed/"{% if skNavigationTitle in ['Røros-Tweed', 'Roros-Tweed'] %} class="act" aria-current="page"{% endif %}>R&oslash;ros-Tweed</a></li>
         </ul>
     </div>
 
