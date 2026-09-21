@@ -7,6 +7,8 @@
         {% include "layout/header.html.twig" with {active_step: active_step} %}
     {% endblock %}
 
+    <button type="button" id="top" class="sk-back-to-top" aria-label="Nach oben" title="Nach oben"></button>
+
     {% set skClassKey = oView.getClassKey() %}
     {% set skAccountPage = skClassKey == 'account'
         or skClassKey|slice(0, 8) == 'account_'

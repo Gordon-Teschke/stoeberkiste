@@ -3890,3 +3890,117 @@ html body.cl-user.is-checkout .sk-checkout-user-page #user_form #addressForm .fo
         line-height: 22.4px !important;
     }
 }
+
+/* -------------------------------------------------------------------------
+   Start page brands, shared CMS typography and global back-to-top control
+   ------------------------------------------------------------------------- */
+body.cl-start .brands h3,
+body.cl-start .brands .h3,
+body.cl-start .brands .all-brands a,
+body.cl-start .brands .all-brands a:hover,
+body.cl-start .brands .all-brands a:focus {
+    color: var(--sk-v3-red) !important;
+}
+
+body.cl-content .sk-content-main > h1,
+body.cl-content .sk-content-main #test_contentHeader {
+    float: none !important;
+    margin: 14px 0 !important;
+    color: var(--sk-v3-red) !important;
+    font-size: 26px !important;
+    font-weight: 200 !important;
+    line-height: 36.4px !important;
+}
+
+body.cl-content .sk-content-main .cmsContent {
+    margin: 0 !important;
+    color: var(--sk-v3-blue) !important;
+    font-size: 18px !important;
+    font-weight: 300 !important;
+    line-height: 25.2px !important;
+}
+
+body.cl-content .sk-content-main .cmsContent > div,
+body.cl-content .sk-content-main .cmsContent li {
+    color: var(--sk-v3-blue) !important;
+    font-size: 18px !important;
+    line-height: 25.2px !important;
+}
+
+body.cl-content .sk-content-main .cmsContent p {
+    float: none !important;
+    margin: 0 0 20px !important;
+    color: var(--sk-v3-blue) !important;
+    font-size: 18px !important;
+    line-height: 20px !important;
+}
+
+body.cl-content .sk-content-main .cmsContent h2 {
+    margin: 0 !important;
+    color: var(--sk-v3-blue) !important;
+    font-size: 27px !important;
+    font-weight: 700 !important;
+    line-height: 37.8px !important;
+}
+
+body.cl-content .sk-content-main .cmsContent h3 {
+    margin: 0 !important;
+    color: var(--sk-v3-blue) !important;
+    font-size: 21px !important;
+    font-weight: 200 !important;
+    line-height: 29.4px !important;
+}
+
+body.cl-content .sk-content-main .cmsContent a,
+body.cl-content .sk-content-main .cmsContent strong,
+body.cl-content .sk-content-main .cmsContent em,
+body.cl-content .sk-content-main .cmsContent span {
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+body.cl-content .sk-content-main .cmsContent a {
+    color: #000 !important;
+}
+
+body.cl-content .sk-content-main .cmsContent a:hover,
+body.cl-content .sk-content-main .cmsContent a:focus {
+    color: var(--sk-v3-red) !important;
+}
+
+#top.sk-back-to-top {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+    position: fixed !important;
+    right: 26px !important;
+    bottom: 26px !important;
+    z-index: 9999999 !important;
+    width: 26px !important;
+    height: 26px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    background: var(--sk-v3-red) url("../img/slide-top.jpg") no-repeat center center !important;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, .25) !important;
+    cursor: pointer;
+}
+
+#top.sk-back-to-top:focus-visible {
+    outline: 2px solid var(--sk-v3-blue);
+    outline-offset: 3px;
+}
+
+@media (max-width: 1024px) {
+    #top.sk-back-to-top {
+        right: 16px !important;
+        bottom: 16px !important;
+        margin: 0 !important;
+    }
+
+    #top.sk-back-to-top[style*="display: block"],
+    #top.sk-back-to-top[style*="display: inline-block"] {
+        display: block !important;
+    }
+}
