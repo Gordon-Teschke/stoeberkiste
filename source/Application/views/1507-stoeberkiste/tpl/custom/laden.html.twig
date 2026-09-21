@@ -1,0 +1,83 @@
+{% capture append = "oxidBlock_content" %}
+    {% set skLadenIntro = '' %}
+    {% set skLadenAktion = '' %}
+    {% set skLadenKontakt = '' %}
+    {% ifcontent ident "laden_einleitung" set oCont %}
+        {% set skLadenIntro = oCont.oxcontents__oxcontent.value %}
+    {% endifcontent %}
+    {% ifcontent ident "laden_aktion" set oCont %}
+        {% set skLadenAktion = oCont.oxcontents__oxcontent.value %}
+    {% endifcontent %}
+    {% ifcontent ident "laden_kontakt" set oCont %}
+        {% set skLadenKontakt = oCont.oxcontents__oxcontent.value %}
+    {% endifcontent %}
+
+    <div class="sk-laden-page">
+        <div class="image-top">
+            <img src="/out/stoeberkiste/img/header-laden.jpg" alt="Stoeberkiste Laden">
+        </div>
+
+        <nav class="on-page-navi" aria-label="Laden Navigation">
+            <a href="#first">Start</a>
+            <a href="#second">Aktionen</a>
+            <a href="#third">Anfahrt</a>
+            <a href="#fourth">Kontakt</a>
+        </nav>
+
+        <section class="story about-us" id="first">
+            <h1>&Uuml;ber uns</h1>
+            {% if skLadenIntro %}
+                {{ skLadenIntro|raw }}
+            {% else %}
+                <p>St&ouml;berkiste Wuppertal steht f&uuml;r Design, Mode und Kunsthandwerk aus Skandinavien. In unserem Laden in der M&auml;rkischen Str. 114 finden Sie ausgew&auml;hlte Geschenke, Wohnaccessoires, Textilien und Lieblingsst&uuml;cke f&uuml;r jeden Tag.</p>
+                <p>Wir helfen gerne pers&ouml;nlich weiter und freuen uns auf Ihren Besuch.</p>
+            {% endif %}
+        </section>
+
+        <section class="cms story aktionen-laden2" id="second">
+            <h1>Aktionen im Laden</h1>
+            {% if skLadenAktion %}
+                {{ skLadenAktion|raw }}
+            {% else %}
+                <p>Aktuelle Aktionen und besondere Hinweise aus dem Laden finden Sie hier.</p>
+            {% endif %}
+        </section>
+
+        <section class="story anfahrt-laden" id="third">
+            <h1>Anfahrt - Ihr Weg zur M&auml;rkischen Str. 114, Wuppertal</h1>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d19962.271039751573!2d7.208757888548667!3d51.28749974248787!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b928059130366d%3A0xe74be420e2816fd5!2sM%C3%A4rkische+Str.+114%2C+42281+Wuppertal!5e0!3m2!1sde!2sde!4v1415093804239"
+                    width="100%" height="350" style="border:0" loading="lazy"></iframe>
+            <div class="left">
+                <h1>...mit dem Auto:</h1>
+                <p>Sie erreichen uns am einfachsten &uuml;ber die Autobahn A 46, Ausfahrt "Wichlinghausen", dann geradeaus. Die Stra&szlig;e geht &uuml;ber in die M&auml;rkische Stra&szlig;e. Nach der gro&szlig;en Kurve auf der linken Seite. Parkpl&auml;tze vor dem Gesch&auml;ft und auf der gegen&uuml;berliegenden Stra&szlig;enseite.</p>
+            </div>
+            <div class="right">
+                <h1>...mit &ouml;ffentlichen Verkehrsmitteln:</h1>
+                <p>Autobuslinie 332.<br>Die Haltestelle "Vockendahl" befindet sich unmittelbar vor dem Gesch&auml;ft, wenn man aus Richtung Stadtmitte kommt. Die Buslinie f&auml;hrt ab "Barmer Bahnhof" bzw. "Alter Markt".</p>
+            </div>
+        </section>
+
+        <section class="story last-story kontakt-laden" id="fourth">
+            <h1>Kontakt</h1>
+            <div class="left">
+                {% if skLadenKontakt %}
+                    {{ skLadenKontakt|raw }}
+                {% else %}
+                    <p>M&auml;rkische Str. 114<br>42281 Wuppertal</p>
+                    <p>Telefon: (02 02) 52 40 28<br>Fax: (02 02) 52 69 24<br>E-Mail: <a href="mailto:info@stoeberkiste-wuppertal.de">info@stoeberkiste-wuppertal.de</a></p>
+                {% endif %}
+            </div>
+            <div class="right">
+                <form method="post" action="/">
+                    <input type="hidden" name="action" value="contact">
+                    <input type="text" name="name" value="" placeholder="Name">
+                    <input type="text" name="email" value="" placeholder="E-Mail Adresse">
+                    <textarea name="message" placeholder="Ihre Nachricht an uns..."></textarea>
+                    <input type="submit" value="Nachricht senden" id="contact-all-submit" class="btn">
+                </form>
+            </div>
+        </section>
+    </div>
+{% endcapture %}
+
+{% include "layout/page.html.twig" %}

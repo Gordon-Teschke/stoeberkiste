@@ -1,0 +1,24 @@
+id: coderevoke
+moduleSource: source/modules/code/revoke
+version: 1.2.0
+activated: true
+title:
+  de: 'CoDe Online-Widerrufsformular'
+description:
+  de: 'Frontend-Formular für Widerrufe mit Speicherung und optionaler Mail.'
+lang: ''
+thumbnail: out/pictures/code_logo.png
+author: 'co-de.de Hans-Peter Busse'
+url: 'https://www.co-de.de'
+email: ''
+controllers:
+  revoke: code\revoke\Application\Controller\RevokeController
+  revokeadmin: code\revoke\Application\Controller\Admin\RevokeAdminController
+events:
+  onActivate: 'code\revoke\Application\Core\Events::onActivate'
+  onDeactivate: 'code\revoke\Application\Core\Events::onDeactivate'
+moduleSettings:
+  revoke_email:
+    group: main
+    type: str
+    value: busse@co-de.de

@@ -1,0 +1,153 @@
+{% if oViewConf.getTopActionClassName() != 'clearcookies' and oViewConf.getTopActionClassName() != 'mallstart' %}
+    {{ include_widget({ cl: "oxwCookieNote", _parent: oView.getClassKey(), nocookie: 1 }) }}
+{% endif %}
+
+{% block header_main %}
+    {% set basketCount = 0 %}
+    {% if oxcmp_basket %}
+        {% set basketCount = oxcmp_basket.getItemsCount() %}
+    {% endif %}
+    <header class="sk-header header">
+        <div class="top-bar">
+            <a href="{{ oViewConf.getHomeLink()|raw }}" class="logo-link">
+                <img src="/out/stoeberkiste/img/logo-top.png" alt="{{ oxcmp_shop.oxshops__oxname.value }}">
+            </a>
+
+            <div class="sk-search">
+                {% include "widget/header/search.html.twig" %}
+            </div>
+
+            <nav aria-label="Hauptnavigation">
+                <ul id="topnav">
+                    <li><a href="/Laden/">Unser Laden</a></li>
+                    <li><a href="/Warm/">Shop</a></li>
+                </ul>
+            </nav>
+
+            {% if oView.showSearch() %}
+                <div class="sk-apex-tools btn-group" role="group" aria-label="Shop-Funktionen">
+                    <div class="dropdowns d-none d-lg-inline-block">
+                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                data-bs-auto-close="outside"
+                                aria-label="{{ "CHANGE_LANGUAGE_AND_CURRENCY"|translate }}">
+                            <svg aria-hidden="true"><use xlink:href="#globe"></use></svg>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <form>
+                                {{ include_widget({ cl: "oxwLanguageList", lang: oViewConf.getActLanguageId(), _parent: oView.getClassKey(), nocookie: 1, _navurlparams: oViewConf.getNavUrlParams(), anid: oViewConf.getActArticleId() }) }}
+                                {{ include_widget({ cl: "oxwCurrencyList", cur: oViewConf.getActCurrency(), _parent: oView.getClassKey(), nocookie: 1, _navurlparams: oViewConf.getNavUrlParams(), anid: oViewConf.getActArticleId() }) }}
+                            </form>
+                        </div>
+                    </div>
+
+                    {% if oxcmp_user or oView.getCompareItemCount() or Errors.loginBoxErrors %}
+                        {% set blAnon = 0 %}
+                        {% set force_sid = oView.getSidForWidget() %}
+                    {% else %}
+                        {% set blAnon = 1 %}
+                    {% endif %}
+                    {{ include_widget({ cl: "oxwServiceMenu", _parent: oView.getClassKey(), force_sid: force_sid, nocookie: blAnon, _navurlparams: oViewConf.getNavUrlParams(), anid: oViewConf.getActArticleId() }) }}
+
+                    {% if oxcmp_basket.getProductsCount() %}
+                        {% set blBasketAnon = 0 %}
+                        {% set basket_force_sid = oView.getSidForWidget() %}
+                    {% else %}
+                        {% set blBasketAnon = 1 %}
+                    {% endif %}
+                    {{ include_widget({ cl: "oxwMiniBasket", nocookie: blBasketAnon, force_sid: basket_force_sid }) }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mobile-header">
+            <h1 class="mobile-title">St&ouml;berkiste Wuppertal</h1>
+            <a href="#panel-left" class="trigger trigger-left" aria-label="Men&uuml; &ouml;ffnen"></a>
+            <a href="#panel-right" class="trigger trigger-right" aria-label="Warenkorb &ouml;ffnen"></a>
+        </div>
+
+        <div id="panel-left" class="sk-mobile-panel sk-mobile-panel-left menu-hauptnavigation-container" aria-label="Mobile Navigation">
+            <div class="sk-mobile-panel-inner">
+                <a href="{{ oViewConf.getHomeLink()|raw }}" class="sk-mobile-logo">
+                    <img src="/out/stoeberkiste/img/logo-top.png" alt="{{ oxcmp_shop.oxshops__oxname.value }}">
+                </a>
+
+                <div class="sk-mobile-search">
+                    {% include "widget/header/search.html.twig" %}
+                </div>
+
+                <ul class="sk-mobile-mainnav">
+                    <li><a href="/Laden/">Unser Laden</a></li>
+                    <li><a href="/Warm/">Shop</a></li>
+                </ul>
+
+                <div class="sk-mobile-menu-gap"></div>
+
+                <div class="sk-mobile-category-tree">
+                    {{ include_widget({ cl: "oxwCategoryTree", cnid: oView.getCategoryId(), deepLevel: 0, noscript: 1, nocookie: 1 }) }}
+                </div>
+
+                <ul class="sk-mobile-brand-list">
+                    <li><a href="/Nach-Hersteller/Faerg-Form/">F&auml;rg &amp; Form</a></li>
+                    <li><a href="/Nach-Hersteller/Holmegaard/">Holmegaard</a></li>
+                    <li><a href="/Nach-Hersteller/Kay-Bojesen/">Kay Bojesen</a></li>
+                    <li><a href="/Nach-Hersteller/Kortkartellet/">Kortkartellet</a></li>
+                    <li><a href="/Nach-Hersteller/Livingly/">Livingly</a></li>
+                    <li><a href="/Nach-Hersteller/Marimekko/">Marimekko</a></li>
+                    <li><a href="/Nach-Hersteller/Pia-Malmros/">Pia Malmros</a></li>
+                    <li><a href="/Nach-Hersteller/Pluto-Produkter/">Pluto Produkter</a></li>
+                    <li><a href="/Nach-Hersteller/Roros-Tweed/">R&oslash;ros-Tweed</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <aside id="panel-right" class="sk-mobile-panel sk-mobile-panel-right sidebar" aria-label="Mobiler Warenkorb">
+            <div class="shopping-cart">
+                <div class="count-output"><p>{{ basketCount }}&nbsp;Artikel</p></div>
+                <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ "cl=basket" }) }}" class="btn to-checkout">Meine&nbsp;Eink&auml;ufe</a>
+                <a href="/Warm/" class="btn to-shop">Zum Shop</a>
+                <a href="#" class="btn to-contact">Kontakt</a>
+            </div>
+        </aside>
+
+        <aside class="cart-fixed" aria-label="Warenkorb und Kontakt">
+            <div class="count-output"><p>{{ basketCount }}&nbsp;Artikel</p></div>
+            <div class="sk-cart-actions">
+                <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ "cl=basket" }) }}" class="btn to-checkout">Meine&nbsp;Eink&auml;ufe</a>
+                <a href="/Warm/" class="btn to-shop">Zum Shop</a>
+                <a href="#" class="btn to-contact">Kontakt</a>
+            </div>
+        </aside>
+
+        <section id="sk-contact" class="contact-all-overlay sk-contact-panel">
+            <div class="contact-all-inner">
+                <a href="{{ oViewConf.getHomeLink()|raw }}">
+                    <img src="/out/stoeberkiste/img/logo-top.png" alt="{{ oxcmp_shop.oxshops__oxname.value }}">
+                </a>
+                <p class="close-contact">Schlie&szlig;en</p>
+                <h4>Kontakt</h4>
+                <p class="contact-all-text">
+                    M&auml;rkische Str.114<br>
+                    42281 Wuppertal<br>
+                    Telefon: (02 02) 52 40 28<br>
+                    Fax: (02 02) 52 69 24<br>
+                    E-Mail: <a href="mailto:info@stoeberkiste-wuppertal.de">info@stoeberkiste-wuppertal.de</a>
+                </p>
+                <form id="contact-ajax" method="post" action="{{ oViewConf.getSslSelfLink()|raw }}" class="needs-validation">
+                    {{ oViewConf.getHiddenSid()|raw }}
+                    <input type="hidden" name="fnc" value="send">
+                    <input type="hidden" name="cl" value="contact">
+                    <input type="hidden" name="editval[oxuser__oxlname]" value="-">
+                    <input type="hidden" name="c_subject" value="Kontaktanfrage">
+                    <input type="text" name="editval[oxuser__oxfname]" value="" placeholder="Name" required>
+                    <input type="email" name="editval[oxuser__oxusername]" value="" placeholder="E-Mail Adresse" required>
+                    <textarea name="c_message" placeholder="Ihre Nachricht an uns..." required></textarea>
+                    <input type="submit" value="Nachricht senden" id="contact-all-submit" class="btn btn-highlight">
+                </form>
+            </div>
+        </section>
+
+    </header>
+{% endblock %}
+
+{{ insert_new_basket_item({tpl: "widget/minibasket/newbasketitemmsg.html.twig", type: "message"})|raw }}
+{% include_dynamic "widget/minibasket/minibasketmodal.html.twig" %}

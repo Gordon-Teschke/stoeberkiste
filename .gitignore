@@ -1,0 +1,58 @@
+# Runtime/cache/log data
+/source/tmp/
+/source/cache/
+/source/log/
+/source/export/
+/var/cache/
+/var/log/
+/var/sessions/
+
+# Local/server secrets
+/source/config.inc.php
+/source/_.htpasswd
+/.env
+/.env.*
+*.key
+*.pem
+*.p12
+
+# Dependencies and generated package folders
+/vendor/
+/node_modules/
+
+# Dynamic shop media and generated images
+/source/out/pictures/
+/source/out/downloads/uploads/
+
+# Common temporary/backups
+*.log
+*.tmp
+*.bak
+*.old
+*.orig
+*.sql
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# OS/editor files
+Thumbs.db
+.DS_Store
+
+# Local audit/instruction workspaces, not part of the deployable shop snapshot
+/.v0_twig_theme/
+/.zip/
+/docs/
+/out/
+/smarty_theme_org/
+/stoeber_visual_audit_V10_3_1/
+/twig_theme/
+/CODEX_AUFTRAG_STOEBERKISTE_FINAL.md
+/Codex-Auftrag_ Aktuellen Stoeberkiste-Webspace in Git sichern.md
+/README_FIRST.md
+/STOEBERKISTE_CODEX_ARBEITSANWEISUNG_EXCEL_FEHLERLISTE.md
+
+*.org
+*.org[0-9]
+/var/configuration/shops/1/modules/eyeable_assist.yaml

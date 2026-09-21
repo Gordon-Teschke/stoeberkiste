@@ -1,0 +1,49 @@
+{% capture append = "oxidBlock_pageBody" %}
+    {% if oView.isEnabledPrivateSales() %}
+        {{ include_widget({ cl: "oxwCookieNote", _parent: oView.getClassKey(), nocookie: 1 }) }}
+    {% endif %}
+{% endcapture %}
+
+{% capture append = "oxidBlock_content" %}
+    {% if oView.showUpdateScreen() %}
+        {% set template_title = "NEW_PASSWORD"|translate %}
+    {% elseif oView.updateSuccess() %}
+        {% set template_title = "CHANGE_PASSWORD"|translate %}
+    {% else %}
+        {% set template_title = "FORGOT_PASSWORD"|translate %}
+    {% endif %}
+
+    <div class="all-user-settings sk-account-forgot">
+        <section class="story with-border" data-id="user-settings">
+            <h1>Mein Account</h1>
+            <h2>{{ template_title }}</h2>
+
+            {% if oView.isExpiredLink() %}
+                <div class="error-msg"><p>{{ translate({ ident: "ERROR_MESSAGE_PASSWORD_LINK_EXPIRED" }) }}</p></div>
+            {% elseif oView.showUpdateScreen() %}
+                <div class="with-inputs">{% include "form/forgotpwd_change_pwd.html.twig" %}</div>
+            {% elseif oView.updateSuccess() %}
+                <div class="success-msg"><p>{{ translate({ ident: "PASSWORD_CHANGED" }) }}</p></div>
+                <form action="{{ oViewConf.getSelfActionLink()|raw }}" method="post">
+                    {{ oViewConf.getHiddenSid()|raw }}
+                    <input type="hidden" name="cl" value="start">
+                    <button id="backToShop" class="btn" type="submit">{{ translate({ ident: "BACK_TO_SHOP" }) }}</button>
+                </form>
+            {% elseif oView.getForgotEmail() %}
+                <div class="success-msg"><p>{{ translate({ ident: "PASSWORD_WAS_SEND_TO" }) }} {{ oView.getForgotEmail() }}</p></div>
+            {% else %}
+                <div class="with-inputs">{% include "form/forgotpwd_email.html.twig" %}</div>
+            {% endif %}
+        </section>
+    </div>
+
+    {% if not oView.isActive('PsLogin') %}
+        {{ insert_tracker({title: template_title}) }}
+    {% endif %}
+{% endcapture %}
+
+{% if oView.isActive('PsLogin') %}
+    {% include "layout/popup.html.twig" %}
+{% else %}
+    {% include "layout/page.html.twig" %}
+{% endif %}

@@ -1,0 +1,35 @@
+{
+    "name":        "code/revoke",
+    "description": "Widerrufsformular",
+    "type":        "oxideshop-module",
+    "keywords":    [
+        "oxid",
+        "modules",
+        "eShop"
+    ],
+    "homepage":    "https://www.co-de.de",
+    "license":     [
+        "GPL-3.0",
+        "proprietary"
+    ],
+    "version": "1.2.0",
+    "authors":     [
+        {
+            "name":  "co-de.de",
+            "email": "info@co-de.de"
+        }
+    ],
+    "extra":       {
+        "oxideshop": {
+            "target-directory": "code/revoke"
+        }
+    },
+    "require":     {
+        "php": ">=8.0"
+    },
+    "autoload":    {
+        "psr-4": {
+            "code\\revoke\\": "./"
+        }
+    }
+}

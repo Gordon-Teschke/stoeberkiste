@@ -1,0 +1,63 @@
+<div id="detailsMain" class="details">
+    {% include "page/details/inc/productmain.html.twig" %}
+
+    {% set oDetailsProduct = oView.getProduct() %}
+    <form id="contact-ajax-detail" method="post" action="#" class="product-mail sk-product-question">
+        <input type="hidden" name="action" value="contact">
+        <p>Haben Sie Fragen zu diesem Artikel? Schreiben Sie uns:</p>
+        <input type="hidden" name="ArtikelName" value="{{ oDetailsProduct.oxarticles__oxtitle.value }} {{ oDetailsProduct.oxarticles__oxvarselect.value }}">
+        <input type="hidden" name="ArtikelNr" value="{{ oDetailsProduct.oxarticles__oxartnum.value }}">
+        <input type="text" name="name" value="" placeholder="Ihr Name" class="small-input">
+        <input type="text" name="email" value="" placeholder="Ihre E-Mail Adresse" class="small-input right-input">
+        <textarea name="message" placeholder="Ihre Nachricht an uns..."></textarea>
+        <input type="checkbox" name="dsgvo1" id="dsgvo" class="sk-dsgvo-check">
+        <label for="dsgvo" class="sk-dsgvo-label">Ich habe die Datenschutzerklärung gelesen und erkläre mich mit der Speicherung und Verarbeitung meiner Daten durch diese Website zum Zweck der Kontaktaufnahme durch den Webseitenbetreiber einverstanden.</label>
+        <input type="submit" name="" value="Nachricht senden" class="btn" id="submit-product-detail">
+    </form>
+
+    <!-- CMS -->
+
+    {# The reference theme does not render the Apex review panel on product
+       detail pages. Reviews remain in the data model, but the visual panel is
+       intentionally omitted for parity with the live storefront. #}
+    {% block details_productmain_reviews %}{% endblock %}
+
+    {% include_content 'oxstartslot4' ignore missing %}
+</div>
+
+<div class="details-more row-spacer">
+    <div class="container-xxl">
+        <div class="row">
+            {% set oManufacturer = oView.getManufacturer() %}
+            {% if oManufacturer and oManufacturer.oxmanufacturers__oxshortdesc.value %}
+                <div class="col-12 col-md-6">
+                    <div class="details-more-manufacturer">
+                        {% if oManufacturer and oManufacturer.getIconUrl() %}
+                            {% set aImgDimensions = oManufacturer.getIconUrl()|getimagesize %}
+                            <img loading="lazy" class="manufacturer-list-logo" src="{{ oManufacturer.getIconUrl()|raw }}"
+                                 alt="{{ translate({ ident: "MANUFACTURER_IMAGE_ALT", args: oManufacturer.oxmanufacturers__oxtitle.value }) }}" width="{{ aImgDimensions.0 }}"
+                                 height="{{ aImgDimensions.1 }}">
+                        {% else %}
+                            <div class="h5">{{ oManufacturer.oxmanufacturers__oxtitle.value }}</div>
+                        {% endif %}
+                        <p>{{ oManufacturer.oxmanufacturers__oxshortdesc.value }}</p>
+                        <a class="btn btn-outline-primary" href="{{ oManufacturer.getLink()|raw }}"
+                           title="{{ oManufacturer.oxmanufacturers__oxtitle.value }}">
+                            {{ translate({ ident: "SHOW_ME_MORE" }) }}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="col-12 col-md-6">
+                <div class="details-more-cms">
+                    <!-- CMS Content goes here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="detailsRelated" class="details-related">
+    {% include "page/details/inc/related_products.html.twig" %}
+</div>

@@ -1,0 +1,270 @@
+{% set actCategory = oView.getActiveCategory() %}
+{% set listType = oView.getListType() %}
+{% set showPopBreadcrump = oViewConf.getViewThemeParam('sShowPopBreadcrump') %}
+{% set oPageNavigation = oView.getPageNavigation() %}
+{% set listTitle = actCategory ? actCategory.getTitle() : oView.getTitle() %}
+{% set skHeaderImage = '/out/stoeberkiste/img/header-shop.jpg' %}
+{% set skBrandIdent = '' %}
+
+{% if listTitle == 'Warm' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/cat-warm.jpg' %}
+{% elseif listTitle == 'Weich' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/cat-weich.jpg' %}
+{% elseif listTitle == 'Klar' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/cat-klar.jpg' %}
+{% elseif listTitle == 'Tierisch' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/cat-tierisch.jpg' %}
+{% elseif listTitle == 'Kunstvoll' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/cat-kunstvoll.jpg' %}
+{% elseif listTitle == 'Røros-Tweed' or listTitle == 'Roros-Tweed' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/cat-roros.jpg' %}
+{% elseif listTitle == 'Pia Malmros' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/page-karten.jpg' %}
+{% elseif listTitle == 'Färg & Form' or listTitle == 'Faerg & Form' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/hersteller-faerg.jpg' %}
+{% elseif listTitle == 'Marimekko' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/hersteller-marimekko.jpg' %}
+{% elseif listTitle == 'Pluto Produkter' %}
+    {% set skHeaderImage = '/out/stoeberkiste/img/header/hersteller-pluto.jpg' %}
+{% endif %}
+
+{% if listType == 'manufacturer' %}
+    {% if listTitle == 'Färg & Form' or listTitle == 'Faerg & Form' %}
+        {% set skBrandIdent = 'brand_faerg_form' %}
+    {% elseif listTitle == 'Holmegaard' %}
+        {% set skBrandIdent = 'brand_holmegaard' %}
+    {% elseif listTitle == 'Bergerlind' %}
+        {% set skBrandIdent = 'brand_bergerlind' %}
+    {% elseif listTitle == 'Livingly' %}
+        {% set skBrandIdent = 'brand_livingly' %}
+    {% elseif listTitle == 'Marimekko' %}
+        {% set skBrandIdent = 'brand_marimekko' %}
+    {% elseif listTitle == 'Pia Malmros' %}
+        {% set skBrandIdent = 'brand_pia_malmros' %}
+    {% elseif listTitle == 'Pluto Produkter' %}
+        {% set skBrandIdent = 'brand_pluto_produkter' %}
+    {% elseif listTitle == 'Røros-Tweed' or listTitle == 'Roros-Tweed' %}
+        {% set skBrandIdent = 'brand_roros_tweed' %}
+    {% elseif listTitle == 'Kay Bojesen' %}
+        {% set skBrandIdent = 'brand_kay_bojesen' %}
+    {% elseif listTitle == 'Maika Taschen' %}
+        {% set skBrandIdent = 'brand_maika' %}
+    {% elseif listTitle == 'Kortkartellet' %}
+        {% set skBrandIdent = 'brand_kortkartellet' %}
+    {% endif %}
+{% endif %}
+
+{% capture append = "oxidBlock_sidebar" %}
+    {% if listType=='manufacturer' or listType=='vendor' %}
+        {% if actCategory and actCategory.getIconUrl() %}
+        <div class="box">
+            <h2 class="h3">
+                {% if listType=='manufacturer' %}
+                    {{ translate({ ident: "BRAND" }) }}
+                {% elseif listType=='vendor' %}
+                    {{ translate({ ident: "VENDOR" }) }}
+                {% endif %}
+            </h2>
+            <div class="featured icon">
+                <img loading="lazy" src="{{ actCategory.getIconUrl()|raw }}" alt="{{ translate({ ident: "MANUFACTURER_IMAGE_ALT", args: actCategory.getTitle() }) }}">
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+{% endcapture %}
+
+{% capture append = "oxidBlock_content" %}
+    {% block page_list_listhead %}
+    {% if listType=='manufacturer' or listType=='vendor' %}
+    <div class="bg-white list-header sk-list-header mb-4">
+        <div class="container-xxl">
+            <div class="row">
+                <div class="col-12 col-md-7 order-2 order-md-1">
+                    {% if showPopBreadcrump %}
+                    <div class="row">
+                        {% include "widget/breadcrumb.html.twig" %}
+                    </div>
+                    {% endif %}
+
+                    <h1{% if actCategory.oxcategories__oxthumb.value and actCategory.getThumbUrl() %} class="text-white"{% endif %}>
+                        {{ listTitle }}
+                    </h1>
+                    {% if actCategory and actCategory.getShortDescription() and oPageNavigation.actPage == 1 %}
+                    <div id="catDescLocator" class="categoryDescription pb-5">
+                        {{ actCategory.getShortDescription()|raw() }}
+                    </div>
+                    {% endif %}
+                    {% if skBrandIdent and oPageNavigation.actPage == 1 %}
+                        {% ifcontent ident skBrandIdent set skBrandContent %}
+                            <div class="sk-brand-content categoryDescription pb-3">
+                                {{ skBrandContent.oxcontents__oxcontent.value|raw }}
+                            </div>
+                        {% endifcontent %}
+                    {% endif %}
+                </div>
+                <div class="col-12 col-md-5 order-1 order-md-2 py-4">
+                    <img src="{{ skHeaderImage }}" alt="{{ translate({ ident: "MANUFACTURER_IMAGE_ALT", args: listTitle }) }}" class="w-100 img-fluid sk-header-image">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <div class="bg-white list-header sk-list-header mb-4">
+            <div class="container-xxl">
+                <div class="row">
+                    <div class="col-12 col-md-7 order-2 order-md-1">
+                        {% if showPopBreadcrump %}
+                            <div class="row">
+                                {% include "widget/breadcrumb.html.twig" %}
+                            </div>
+                        {% endif %}
+
+                        <h1 class="h2">
+                            {{ listTitle }}
+                        </h1>
+
+                        {% if actCategory and actCategory.getShortDescription() and oPageNavigation.actPage == 1 %}
+                            <div id="catDescLocator" class="categoryDescription pb-3">
+                                {{ actCategory.getShortDescription()|raw() }}
+                            </div>
+                        {% endif %}
+
+                        {% if actCategory.oxcategories__oxlongdesc.value and oPageNavigation.actPage == 1 %}
+                            {% block page_list_long_desc %}
+                                <div id="catLongDescLocator" class="categoryDescription">
+                                    {{ actCategory.oxcategories__oxlongdesc.value|raw }}
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                    <div class="col-12 col-md-5 order-1 order-md-2 py-4 text-right">
+                        <img src="{{ skHeaderImage }}" alt="{{ translate({ ident: "CATEGORY_IMAGE_ALT", args: listTitle }) }}" class="w-100 img-fluid sk-header-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if oView.hasVisibleSubCats() %}
+        <div class="container-xxl">
+            {% set iSubCategoriesCount = 0 %}
+            <div class="cat-list mb-4 pb-3">
+                {% for category in oView.getSubCatList() %}
+                    {% if category.getIsVisible() %}
+                        {% set iSubCategoriesCount = iSubCategoriesCount+1 %}
+                        {% set iconUrl = category.getIconUrl() %}
+                        {% if listType=='manufacturer' or listType=='vendor' %}
+                            {% set iconAltAttribute = translate({ ident: "MANUFACTURER_IMAGE_ALT", args: category.oxcategories__oxtitle.value }) %}
+                        {% else %}
+                            {% set iconAltAttribute = translate({ ident: "CATEGORY_IMAGE_ALT", args: category.oxcategories__oxtitle.value }) %}
+                        {% endif %}
+                            <a href="{{ category.getLink()|raw }}" title="{{ category.oxcategories__oxdesc.value }}" class="cat-list-item">
+                                {% if iconUrl %}
+                                    <img loading="lazy" src="{{ category.getIconUrl()|raw }}" alt="{{ iconAltAttribute }}" class="cat-list-item-img">
+                                {% else %}
+                                    <img loading="lazy" src="{{ oViewConf.getImageUrl('subcat-placeholder.png')|raw }}" alt="{{ iconAltAttribute }}" class="cat-list-item-img">
+                                {% endif %}
+                                <span class="cat-list-item-name">
+                                    {{ category.oxcategories__oxtitle.value }}
+
+                                    {% if oView.showCategoryArticlesCount() and (category.getNrOfArticles() > 0) %}
+                                        <span class="text-muted">({{ category.getNrOfArticles() }})</span>
+                                    {% endif %}
+                                </span>
+                            </a>
+                    {% endif %}
+
+                    {% if category.getContentCats() %}
+                        {% for ocont in category.getContentCats() %}
+                            <a href="{{ ocont.getLink()|raw }}" title="{{ category.oxcategories__oxdesc.value }}" class="cat-list-item">
+                                {% if listType=='manufacturer' or listType=='vendor' %}
+                                    {% set iconAltAttribute = translate({ ident: "MANUFACTURER_IMAGE_ALT", args: category.oxcategories__oxtitle.value }) %}
+                                {% else %}
+                                    {% set iconAltAttribute = translate({ ident: "CATEGORY_IMAGE_ALT", args: category.oxcategories__oxtitle.value }) %}
+                                {% endif %}
+                                <img loading="lazy" src="{{ oViewConf.getImageUrl('subcat-placeholder.png')|raw }}" alt="{{ iconAltAttribute }}" class="cat-list-item-img">
+                                <span class="cat-list-item-name">
+                                    {{ ocont.oxcontents__oxtitle.value }}
+                                </span>
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% endblock %}
+
+
+    {% block page_list_listbody %}
+        {% if oView.getArticleList() %}
+
+            {% set categoryWidth = oViewConf.getViewThemeParam('sCategoryWidth') %}
+                <div class="article-list pb-5">
+                    <div class="container-xxl sk-list-body">
+                        <aside class="side-menu-complete sk-side-menu" aria-label="Shopnavigation">
+                            <div class="shop-menu">
+                                {{ include_widget({ cl: "oxwCategoryTree", cnid: oView.getCategoryId(), deepLevel: 0, noscript: 1, nocookie: 1 }) }}
+                            </div>
+
+                            {% set skManufacturers = oView.getManufacturerlist() %}
+                            {% if skManufacturers %}
+                                <div class="shop-menu sk-brand-menu">
+                                    <ul class="all-brands">
+                                        <li>Nach Marken</li>
+                                        {% for skManufacturer in skManufacturers %}
+                                            {% if skManufacturer.oxmanufacturers__oxtitle.value != "Stöber" and skManufacturer.oxmanufacturers__oxtitle.value != "Bergerlind" %}
+                                                <li>
+                                                    <a href="{{ skManufacturer.getLink()|raw }}" class="{% if oView.getManufacturerId() == skManufacturer.getId() %}act{% endif %}">
+                                                        {{ skManufacturer.oxmanufacturers__oxtitle.value }}
+                                                        {% if skManufacturer.getNrOfArticles() > 0 %}
+                                                            ({{ skManufacturer.getNrOfArticles() }})
+                                                        {% endif %}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+
+                            <div class="shop-info-menu">
+                                <ul class="shop-info">
+                                    <li><a href="/Versand-Kosten/">Versand und Kosten</a></li>
+                                    <li><a href="/Widerrufsrecht/">Widerrufsrecht</a></li>
+                                    <li><a href="/Impressum/">Impressum</a></li>
+                                    <li><a href="/Datenschutz/">Datenschutz</a></li>
+                                    <li class="open-contact"><a href="#">Kontakt</a></li>
+                                </ul>
+                            </div>
+                        </aside>
+
+                        <div class="sk-product-list-panel">
+                            {% if oView.getArticleList() %}
+                                {% block page_list_upperlocator %}
+                                    {% include "widget/locator/listlocator.html.twig" with {locator: oView.getPageNavigationLimitedTop(), attributes: oView.getAttributes(), listDisplayType: true, itemsPerPage: true, sort: true} %}
+                                {% endblock %}
+                            {% endif %}
+                            <div class="row">
+                                {% if oView.getArticleList() %}
+                                    {# List types: grid|line #}
+                                    {% block page_list_productlist %}
+                                        {% include "widget/product/list.html.twig" with {type: "line", listId: "productList", products: oView.getArticleList()} %}
+                                    {% endblock %}
+                                    {% block page_list_bottomlocator %}
+                                        {% include "widget/locator/listlocator.html.twig" with {locator: oView.getPageNavigationLimitedBottom(), place: "bottom"} %}
+                                    {% endblock %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% block page_list_content %}{% endblock %}
+
+            {% include_content 'oxstartslot4' ignore missing  %}
+        {% endif %}
+    {% endblock %}
+    {{ insert_tracker() }}
+{% endcapture %}
+{% include "layout/page.html.twig" with {tree_path: oView.getTreePath()} %}

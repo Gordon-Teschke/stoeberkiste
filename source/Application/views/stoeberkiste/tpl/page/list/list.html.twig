@@ -1,0 +1,365 @@
+{% set actCategory = oView.getActiveCategory() %}
+{% set listType = oView.getListType() %}
+{% set oPageNavigation = oView.getPageNavigation() %}
+{% set listTitle = actCategory ? actCategory.getTitle() : oView.getTitle() %}
+{% set skHeaderImage = '/out/stoeberkiste/img/header-shop.jpg' %}
+{% set skBrandIdent = '' %}
+{% set skIsManufacturer = oView.getClassKey() == 'manufacturerlist' or listType == 'manufacturer' or listType == 'vendor' %}
+{% set skIsPia = skIsManufacturer and listTitle == 'Pia Malmros' %}
+
+{# Use the data-maintained category/manufacturer artwork. This mirrors the
+   reference Smarty theme and avoids title-based image mismatches. #}
+{% if skIsManufacturer and actCategory and actCategory.getIconUrl() %}
+    {% set skHeaderImage = actCategory.getIconUrl() %}
+{% elseif actCategory and actCategory.oxcategories__oxthumb.value %}
+    {% set skHeaderImage = actCategory.getThumbUrl() %}
+{% endif %}
+
+{% if skIsManufacturer %}
+    {% if listTitle == 'Färg & Form' or listTitle == 'Faerg & Form' %}
+        {% set skBrandIdent = 'brand_faerg_form' %}
+    {% elseif listTitle == 'Holmegaard' %}
+        {% set skBrandIdent = 'brand_holmegaard' %}
+    {% elseif listTitle == 'Bergerlind' %}
+        {% set skBrandIdent = 'brand_bergerlind' %}
+    {% elseif listTitle == 'Livingly' %}
+        {% set skBrandIdent = 'brand_livingly' %}
+    {% elseif listTitle == 'Marimekko' %}
+        {% set skBrandIdent = 'brand_marimekko' %}
+    {% elseif listTitle == 'Pia Malmros' %}
+        {% set skBrandIdent = 'brand_pia_malmros' %}
+    {% elseif listTitle == 'Pluto Produkter' %}
+        {% set skBrandIdent = 'brand_pluto_produkter' %}
+    {% elseif listTitle == 'Røros-Tweed' or listTitle == 'Roros-Tweed' %}
+        {% set skBrandIdent = 'brand_roros_tweed' %}
+    {% elseif listTitle == 'Kay Bojesen' %}
+        {% set skBrandIdent = 'brand_kay_bojesen' %}
+    {% elseif listTitle == 'Maika Taschen' %}
+        {% set skBrandIdent = 'brand_maika' %}
+    {% elseif listTitle == 'Kortkartellet' %}
+        {% set skBrandIdent = 'brand_kortkartellet' %}
+    {% endif %}
+{% endif %}
+
+{% capture append = "oxidBlock_content" %}
+    <div class="bg-white list-header sk-list-header{% if skIsPia %} sk-pia-header{% endif %}">
+        <img src="{{ skHeaderImage|raw }}"
+             alt="{{ listTitle }}"
+             class="sk-header-image">
+    </div>
+
+    {% if skIsPia %}
+        <main class="sk-pia-page">
+            <div class="sk-pia-inner">
+                <div class="all-cards-top" id="all-cards-top">
+                    <nav class="ext_cards" aria-label="Pia-Malmros-Kategorien">
+                        <a href="/Kunstvoll/" class="sk_button">Kunstvoll</a>
+                        <a href="/Kunstvoll/Karten/" class="sk_button">Karten</a>
+                    </nav>
+
+                    <h1>{{ listTitle }}</h1>
+                    {% set skPiaContentFound = false %}
+                    {% ifcontent ident "brand_pia_malmros" set skPiaContent %}
+                        {% set skPiaContentFound = true %}
+                        <div class="categoryDescription">
+                            {{ skPiaContent.oxcontents__oxcontent.value|raw }}
+                        </div>
+                    {% endifcontent %}
+                    {% if not skPiaContentFound and actCategory and actCategory.oxcategories__oxlongdesc.value %}
+                        <div class="categoryDescription">
+                            {{ actCategory.oxcategories__oxlongdesc.value|raw }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div id="sk-pia-overlay" class="sk-pia-overlay" hidden aria-hidden="true">
+                    <div class="sk-pia-overlay-content" tabindex="-1"></div>
+                </div>
+
+                <div class="all-cards sk-pia-cards">
+                    {% for product in oView.getArticleList() %}
+                        <a class="card-item" href="{{ product.getLink()|raw }}"
+                           aria-label="{{ product.oxarticles__oxtitle.value }}">
+                            <span class="card sk-pia-card-image">
+                                <img loading="lazy"
+                                     src="{{ product.getPictureUrl(1)|raw }}"
+                                     alt="{{ product.oxarticles__oxtitle.value }}">
+                            </span>
+                            <span class="sk-pia-artnum">{{ product.oxarticles__oxartnum.value }}</span>
+                            <small>{{ product.oxarticles__oxtitle.value }}</small>
+                        </a>
+                    {% endfor %}
+                </div>
+
+                {% include "widget/locator/listlocator.html.twig" with {
+                    locator: oView.getPageNavigationLimitedBottom(),
+                    place: "bottom"
+                } %}
+            </div>
+        </main>
+        {% capture append = "oxidBlock_pageScript" %}
+            <script>
+            (function () {
+                var page = document.querySelector('.sk-pia-page');
+                var overlay = document.getElementById('sk-pia-overlay');
+                if (!page || !overlay) {
+                    return;
+                }
+
+                var content = overlay.querySelector('.sk-pia-overlay-content');
+                var lastTrigger = null;
+
+                function closeOverlay() {
+                    overlay.setAttribute('hidden', 'hidden');
+                    overlay.setAttribute('aria-hidden', 'true');
+                    page.classList.remove('is-layer-open');
+                    content.innerHTML = '';
+                    if (lastTrigger) {
+                        lastTrigger.focus();
+                    }
+                }
+
+                function escapeHtml(value) {
+                    var div = document.createElement('div');
+                    div.textContent = value || '';
+                    return div.innerHTML;
+                }
+
+                function hiddenInputsFrom(form) {
+                    if (!form) {
+                        return '';
+                    }
+                    return Array.from(form.querySelectorAll('input[type="hidden"]')).map(function (input) {
+                        return '<input type="hidden" name="' + escapeHtml(input.name) + '" value="' + escapeHtml(input.value) + '">';
+                    }).join('');
+                }
+
+                function galleryImagesFrom(doc) {
+                    var images = [];
+                    Array.from(doc.querySelectorAll('.gallery img, .details-top img')).forEach(function (img) {
+                        var src = img.getAttribute('src') || '';
+                        if (!src || images.indexOf(src) !== -1) {
+                            return;
+                        }
+                        if (src.indexOf('/125_170_') !== -1 && images.length) {
+                            return;
+                        }
+                        images.push(src);
+                    });
+                    return images;
+                }
+
+                function numericPrice(value) {
+                    var match = (value || '').replace(/\./g, '').replace(',', '.').match(/([0-9]+(?:\.[0-9]+)?)/);
+                    return match ? parseFloat(match[1]) : 0;
+                }
+
+                function shippingTextFor(priceText, vatHtml) {
+                    if (numericPrice(priceText) > 0 && numericPrice(priceText) < 50) {
+                        return 'Zzgl. Versandkosten';
+                    }
+                    var plain = (vatHtml || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                    if (/zzgl/i.test(plain)) {
+                        return 'Zzgl. Versandkosten';
+                    }
+                    if (/versandkostenfrei/i.test(plain)) {
+                        return 'Versandkostenfrei';
+                    }
+                    return 'Zzgl. Versandkosten';
+                }
+
+                function productDataFrom(doc, fallbackUrl) {
+                    var form = doc.querySelector('form.js-oxProductForm');
+                    var images = galleryImagesFrom(doc);
+                    var image = doc.querySelector('.zoom-container img, .gallery img, .details-top img');
+                    var title = doc.querySelector('.details-title, .sk-detail-heading h1');
+                    var headingSmall = doc.querySelector('.sk-detail-heading small');
+                    var price = doc.querySelector('#productPrice .price, #productPrice, .price-label .price');
+                    var vat = doc.querySelector('.vat-info-text');
+                    var delivery = doc.querySelector('.deliverytime, .delivery-time');
+                    var amount = doc.querySelector('.tobasket-function input[name="am"]');
+                    var artnumMatch = headingSmall && headingSmall.textContent.match(/Art\.-Nr\.\s*([^\s]+)/);
+                    var priceText = price ? price.textContent.trim() : '';
+                    var vatHtml = vat ? vat.innerHTML.trim() : '';
+
+                    return {
+                        action: form ? form.getAttribute('action') : fallbackUrl,
+                        hiddenInputs: hiddenInputsFrom(form),
+                        imageUrl: images[0] || (image ? image.getAttribute('src') : ''),
+                        innerImageUrl: images[1] || images[0] || (image ? image.getAttribute('src') : ''),
+                        imageAlt: image ? image.getAttribute('alt') || '' : '',
+                        title: title ? title.textContent.trim() : '',
+                        artnum: artnumMatch ? artnumMatch[1] : '',
+                        price: priceText,
+                        shipping: shippingTextFor(priceText, vatHtml),
+                        deliveryText: delivery ? delivery.textContent.replace(/\s+/g, ' ').trim() : 'Lieferzeit: 1-7 Tage',
+                        delivery: delivery ? delivery.textContent.replace(/\s+/g, ' ').replace(/^[●\s]+/, '').trim() : '',
+                        amountValue: amount ? amount.getAttribute('value') || '1' : '1'
+                    };
+                }
+
+                function renderProduct(data, detailUrl) {
+                    var artnum = data.artnum ? 'Karte ' + escapeHtml(data.artnum) : escapeHtml(data.title);
+                    var image = data.imageUrl ?
+                        '<div class="sk-pia-card-panels">' +
+                            '<img class="sk-pia-card-front" src="' + escapeHtml(data.imageUrl) + '" alt="' + escapeHtml(data.imageAlt || data.title) + '">' +
+                            '<img class="sk-pia-card-inside" src="' + escapeHtml(data.innerImageUrl || data.imageUrl) + '" alt="Innenansicht ' + escapeHtml(data.title) + '">' +
+                        '</div>' : '';
+                    var delivery = data.deliveryText ? '<p class="sk-pia-detail-delivery">' + escapeHtml(data.deliveryText) + '</p>' : '';
+                    var shipping = data.shipping ? '<p class="sk-pia-detail-vat">' + escapeHtml(data.shipping) + '</p>' : '<p class="sk-pia-detail-vat">Zzgl. Versandkosten</p>';
+
+                    content.innerHTML =
+                        '<div class="sk-pia-detail-stage" role="region" aria-label="Pia Malmros Produktdetail">' +
+                            '<div class="sk-pia-detail-image">' +
+                                image +
+                                '<button type="button" class="sk-pia-open-card" data-sk-pia-card-toggle>Karte &ouml;ffnen</button>' +
+                            '</div>' +
+                            '<div class="sk-pia-detail-info">' +
+                                '<button type="button" class="sk-pia-overlay-close" data-sk-pia-close>Schlie&szlig;en <span aria-hidden="true">&times;</span></button>' +
+                                '<h2>' + artnum + '</h2>' +
+                                '<p class="sk-pia-detail-title">' + escapeHtml(data.title) + '</p>' +
+                                '<p class="sk-pia-detail-price">' + escapeHtml(data.price) + '</p>' +
+                                shipping +
+                                delivery +
+                                '<form class="sk-pia-detail-basket" action="' + escapeHtml(data.action || detailUrl) + '" method="post">' +
+                                    data.hiddenInputs +
+                                    '<input type="hidden" name="am" value="' + escapeHtml(data.amountValue) + '">' +
+                                    '<button type="submit" class="btn btn-highlight">In den Warenkorb</button>' +
+                                '</form>' +
+                            '</div>' +
+                        '</div>';
+
+                    var closeButton = content.querySelector('[data-sk-pia-close]');
+                    if (closeButton) {
+                        closeButton.addEventListener('click', closeOverlay);
+                    }
+
+                    var toggle = content.querySelector('[data-sk-pia-card-toggle]');
+                    var stage = content.querySelector('.sk-pia-detail-stage');
+                    if (toggle && stage) {
+                        toggle.addEventListener('click', function () {
+                            var isOpen = toggle.getAttribute('data-open') === '1';
+                            toggle.setAttribute('data-open', isOpen ? '0' : '1');
+                            stage.classList.toggle('sk-pia-card-is-open', !isOpen);
+                            toggle.innerHTML = isOpen ? 'Karte &ouml;ffnen' : 'Karte schlie&szlig;en';
+                        });
+                    }
+                }
+
+                function alignStage() {
+                    var offset = window.matchMedia('(max-width: 767px)').matches ? 96 : 154;
+                    var targetY = overlay.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top: Math.max(0, targetY), behavior: 'auto' });
+                }
+
+                function openOverlay(link) {
+                    lastTrigger = link;
+                    page.classList.add('is-layer-open');
+                    overlay.removeAttribute('hidden');
+                    overlay.setAttribute('aria-hidden', 'false');
+                    content.innerHTML = '<p class="sk-pia-overlay-loading">Produkt wird geladen...</p>';
+                    content.focus();
+
+                    fetch(link.href, { credentials: 'same-origin' })
+                        .then(function (response) { return response.text(); })
+                        .then(function (html) {
+                            var doc = new DOMParser().parseFromString(html, 'text/html');
+                            renderProduct(productDataFrom(doc, link.href), link.href);
+                            alignStage();
+                        })
+                        .catch(function () {
+                            content.innerHTML = '<p>Die Produktdetails konnten nicht geladen werden.</p>';
+                            alignStage();
+                        });
+                }
+
+                page.addEventListener('click', function (event) {
+                    var link = event.target.closest('.sk-pia-cards .card-item');
+                    if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+                        return;
+                    }
+                    event.preventDefault();
+                    openOverlay(link);
+                });
+
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Escape' && !overlay.hasAttribute('hidden')) {
+                        closeOverlay();
+                    }
+                });
+            })();
+            </script>
+        {% endcapture %}
+    {% else %}
+        <div class="article-list sk-legacy-list-page">
+            <div class="container-xxl sk-list-body">
+                {% include "widget/sidebar/shop_navigation.html.twig" with {show_counts: true} %}
+
+                <section class="sk-product-list-panel all-items">
+                    <nav class="sk-user-meta" aria-label="Benutzerfunktionen">
+                        {% if oxcmp_user %}
+                            <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink() ~ 'cl=account' }) }}">Mein Konto</a>
+                            <a href="{{ oViewConf.getLogoutLink()|raw }}">Logout</a>
+                        {% else %}
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=register' }) }}">Registrieren</a>
+                            <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=account' }) }}">Anmelden</a>
+                        {% endif %}
+                        <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=account_noticelist' }) }}">Merkliste</a>
+                    </nav>
+
+                    <div class="sk-list-intro">
+                        <h1>{{ listTitle }}</h1>
+
+                        {% set skShortDescription = actCategory ? actCategory.getShortDescription()|striptags|trim : '' %}
+                        {% if actCategory and actCategory.getShortDescription()
+                            and skShortDescription != 'Kurzbeschreibung'
+                            and (not oPageNavigation or oPageNavigation.actPage == 1) %}
+                            <div class="categoryDescription">
+                                {{ actCategory.getShortDescription()|raw }}
+                            </div>
+                        {% endif %}
+
+                        {% if actCategory and actCategory.oxcategories__oxlongdesc.value
+                            and (not oPageNavigation or oPageNavigation.actPage == 1) %}
+                            <div class="categoryDescription">
+                                {{ actCategory.oxcategories__oxlongdesc.value|raw }}
+                            </div>
+                        {% elseif skBrandIdent and (not oPageNavigation or oPageNavigation.actPage == 1) %}
+                            {% ifcontent ident skBrandIdent set skBrandContent %}
+                                <div class="sk-brand-content categoryDescription">
+                                    {{ skBrandContent.oxcontents__oxcontent.value|raw }}
+                                </div>
+                            {% endifcontent %}
+                        {% endif %}
+                    </div>
+
+                    {# The live /Nach-Hersteller/ overview intentionally only shows
+                       the heading. The selectable manufacturer links live in the
+                       left navigation, so no extra tile grid is rendered here. #}
+
+                    {# Subcategories are intentionally only exposed through the
+                       left navigation, matching the reference storefront. #}
+
+                    {% if oView.getArticleList() %}
+                        {% include "widget/product/list.html.twig" with {
+                            type: "line",
+                            listId: "productList",
+                            products: oView.getArticleList()
+                        } %}
+
+                        {% include "widget/locator/listlocator.html.twig" with {
+                            locator: oView.getPageNavigationLimitedBottom(),
+                            place: "bottom"
+                        } %}
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+
+        {% include_content 'oxstartslot4' ignore missing %}
+    {% endif %}
+
+    {{ insert_tracker() }}
+{% endcapture %}
+
+{% include "layout/page.html.twig" with {tree_path: oView.getTreePath()} %}

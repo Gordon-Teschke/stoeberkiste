@@ -1,0 +1,43 @@
+{% set template_title = "CONTACT"|translate %}
+{% capture append = "oxidBlock_content" %}
+    <div class="sk-contact-page">
+        <div class="bg-white sk-content-header sk-list-header">
+            <img src="/out/stoeberkiste/img/header-laden.jpg" alt="" class="sk-header-image">
+        </div>
+
+        <div class="container-xxl sk-content-body sk-contact-body">
+            {% include "widget/sidebar/shop_navigation.html.twig" %}
+
+            <section class="sk-content-main all-items page sk-contact-main">
+                <h1>Kontakt</h1>
+
+                {% if oView.getContactSendStatus() %}
+                    {% set _statusMessage = "PAGE_DETAILS_THANKYOUMESSAGE1"|translate ~ " " ~ oxcmp_shop.oxshops__oxname.value ~ ("PAGE_DETAILS_THANKYOUMESSAGE2"|translate) %}
+                    {% include "message/success.html.twig" with {statusMessage: _statusMessage} %}
+                {% endif %}
+
+                <div class="sk-contact-address" itemscope itemtype="https://schema.org/Organization">
+                    <h2>St&ouml;berkiste Wuppertal</h2>
+                    <address>
+                        <strong itemprop="name">St&ouml;berkiste</strong><br>
+                        <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                            <span itemprop="streetAddress">M&auml;rkische Str. 114</span><br>
+                            <span itemprop="postalCode">42281</span> <span itemprop="addressLocality">Wuppertal</span><br>
+                        </span>
+                        Telefon: <span itemprop="telephone">(02 02) 52 40 28</span><br>
+                        Fax: <span itemprop="faxNumber">(02 02) 52 69 24</span><br>
+                        E-Mail: <a href="mailto:info@stoeberkiste-wuppertal.de" itemprop="email">info@stoeberkiste-wuppertal.de</a>
+                    </address>
+                </div>
+
+                <div class="sk-contact-form with-inputs">
+                    <h2>Schreiben Sie uns</h2>
+                    {% include "form/contact.html.twig" %}
+                </div>
+            </section>
+        </div>
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+{% include "layout/page.html.twig" %}

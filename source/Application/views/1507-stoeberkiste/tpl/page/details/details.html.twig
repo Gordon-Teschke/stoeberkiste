@@ -1,0 +1,162 @@
+{% if not blWorkaroundInclude %}
+    {% capture append = "oxidBlock_content" %}
+        {% if oxcmp_user %}
+            {% set force_sid = oView.getSidForWidget() %}
+        {% endif %}
+        {{ include_widget({ cl: "oxwArticleDetails", _parent: oView.getClassKey(), nocookie: 1, force_sid: force_sid, _navurlparams: oViewConf.getNavUrlParams(), _object: oView.getProduct(), anid: oViewConf.getActArticleId(), iPriceAlarmStatus: oView.getPriceAlarmStatus(), sorting: oView.getSortingParameters(), skipESIforUser: 1 }) }}
+    {% endcapture %}
+    {% include "layout/page.html.twig" %}
+{% else %}
+    {% set oDetailsProduct = oView.getProduct() %}
+    {% set oPictureProduct = oView.getPicturesProduct() %}
+    {% set currency = oView.getActCurrency() %}
+    {% set sPageHeadTitle = oDetailsProduct.oxarticles__oxtitle.value ~ ' ' ~ oDetailsProduct.oxarticles__oxvarselect.value %}
+    {% set headerImageWidth = oViewConf.getViewThemeParam('sHeaderImageWidth') %}
+    {% set productListNavigation = oViewConf.getViewThemeParam('sProductListNavigation') %}
+
+    {% if oView.getPriceAlarmStatus() == 1 %}
+        {% set _statusMessage1 = "PAGE_DETAILS_THANKYOUMESSAGE1"|translate ~ " " ~ oxcmp_shop.oxshops__oxname.value %}
+        {% set _statusMessage2 = "PAGE_DETAILS_THANKYOUMESSAGE2"|translate ~ " " %}
+        {% set _statusMessage3 = "PAGE_DETAILS_THANKYOUMESSAGE3"|translate ~ " " ~ oView.getBidPrice() ~ " " ~ currency.sign ~ " " %}
+        {% set _statusMessage4 = "PAGE_DETAILS_THANKYOUMESSAGE4"|translate %}
+        {% include "message/success.html.twig" with { statusMessage: _statusMessage1 ~ _statusMessage2 ~ _statusMessage3 ~ _statusMessage4 } %}
+    {% elseif oView.getPriceAlarmStatus() == 2 %}
+        {% set _statusMessage = "MESSAGE_WRONG_VERIFICATION_CODE"|translate %}
+        {% include "message/error.html.twig" with {statusMessage: _statusMessage} %}
+    {% elseif oView.getPriceAlarmStatus() is same as(0) %}
+        {% set _statusMessage1 = ("MESSAGE_NOT_ABLE_TO_SEND_EMAIL"|translate) ~ "<br>" %}
+        {% set _statusMessage2 = "MESSAGE_VERIFY_YOUR_EMAIL"|translate %}
+        {% include "message/error.html.twig" with { statusMessage: _statusMessage1 ~ _statusMessage2 } %}
+    {% endif %}
+
+    <div id="details_container">
+        {% if productListNavigation %}
+            {# details locator #}
+            {% set actCategory = oView.getActiveCategory() %}
+
+            <div class="detailsParams listRefine bottomRound product-list-navigation">
+                <div class="container-xxl">
+                    <div class="row refineParams clear" id="detailsItemsPager">
+                        <div class="col-3 pager-overview-link">
+                            <a href="{{ actCategory.toListLink|raw }}">
+                                <svg aria-hidden="true">
+                                    <use xlink:href="#bars"></use>
+                                </svg>
+                                {{ translate({ ident: "BACK_TO_OVERVIEW" }) }}
+                            </a>
+                        </div>
+                        <div class="col-3 pager-prev">
+                            {% if actCategory.prevProductLink %}
+
+                                <a id="linkPrevArticle" href="{{ actCategory.prevProductLink|raw }}">
+                                    <svg aria-hidden="true">
+                                        <use xlink:href="#left"></use>
+                                    </svg>
+                                    {{ translate({ ident: "PREVIOUS_PRODUCT" }) }}
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="col-3 pager-current-page">
+                            {% if actCategory.iProductPos %}
+                                {{ translate({ ident: "PRODUCT" }) }} {{ actCategory.iProductPos }} {{ translate({ ident: "OF" }) }} {{ actCategory.iCntOfProd }}
+                            {% endif %}
+                        </div>
+                        <div class="col-3 pager-next">
+                            {% if actCategory.nextProductLink %}
+                                <a id="linkNextArticle"
+                                   href="{{ actCategory.nextProductLink|raw }}">
+                                    {{ translate({ ident: "NEXT_PRODUCT" }) }}
+                                    <svg aria-hidden="true">
+                                        <use xlink:href="#right"></use>
+                                    </svg>
+                                </a>
+
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if blFullwidth %}
+                        <hr>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        {% set actCategory = oView.getActiveCategory() %}
+        {% set skDetailHeaderImage = '/out/stoeberkiste/img/header-shop.jpg' %}
+        {% if actCategory %}
+            {% set skDetailCategoryTitle = actCategory.getTitle() %}
+            {% if skDetailCategoryTitle == 'God Jul' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-god-jul.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Warm' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-warm.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Wolldecken' or skDetailCategoryTitle == 'Plaids' or skDetailCategoryTitle == 'Sitzunterlagen' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-roros.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Kissen' or skDetailCategoryTitle == 'Kissen und Vorhänge' or skDetailCategoryTitle == 'Kissen und Vorhaenge' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header-kissen.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Weich' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-weich.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Textilien' or skDetailCategoryTitle == 'Geschirrtücher' or skDetailCategoryTitle == 'Geschirrtuecher' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-weich.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Klar' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-klar.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Glas & Porzellan' or skDetailCategoryTitle == 'Holz' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-klar.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Tierisch' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-tierisch.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Elche' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-tierisch.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Kunstvoll' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-kunstvoll.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Karten' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/page-karten.jpg' %}
+            {% elseif skDetailCategoryTitle == 'Mobiles' or skDetailCategoryTitle == 'Papierservietten' %}
+                {% set skDetailHeaderImage = '/out/stoeberkiste/img/header/cat-kunstvoll.jpg' %}
+            {% endif %}
+        {% endif %}
+
+        <div class="bg-white sk-detail-header">
+            <img src="{{ skDetailHeaderImage }}" alt="" class="sk-header-image">
+        </div>
+
+        <div class="container-xxl sk-detail-body">
+            <aside class="side-menu-complete sk-side-menu" aria-label="Shopnavigation">
+                <div class="shop-menu">
+                    {{ include_widget({ cl: "oxwCategoryTree", cnid: oView.getCategoryId(), deepLevel: 0, noscript: 1, nocookie: 1 }) }}
+                </div>
+
+                <div class="shop-menu sk-brand-menu">
+                    <ul class="all-brands">
+                        <li>Nach Marken</li>
+                        <li><a href="/Nach-Hersteller/Faerg-Form/">Färg &amp; Form</a></li>
+                        <li><a href="/Nach-Hersteller/Holmegaard/">Holmegaard</a></li>
+                        <li><a href="/Nach-Hersteller/Kay-Bojesen/">Kay Bojesen</a></li>
+                        <li><a href="/Nach-Hersteller/Kortkartellet/">Kortkartellet</a></li>
+                        <li><a href="/Nach-Hersteller/Livingly/">Livingly</a></li>
+                        <li><a href="/Nach-Hersteller/Marimekko/">Marimekko</a></li>
+                        <li><a href="/Nach-Hersteller/Pia-Malmros/">Pia Malmros</a></li>
+                        <li><a href="/Nach-Hersteller/Pluto-Produkter/">Pluto Produkter</a></li>
+                        <li><a href="/Nach-Hersteller/Roros-Tweed/">Røros-Tweed</a></li>
+                    </ul>
+                </div>
+
+                <div class="shop-info-menu">
+                    <ul class="shop-info">
+                        <li><a href="/Versand-Kosten/">Versand und Kosten</a></li>
+                        <li><a href="/Widerrufsrecht/">Widerrufsrecht</a></li>
+                        <li><a href="/Impressum/">Impressum</a></li>
+                        <li><a href="/Datenschutz/">Datenschutz</a></li>
+                        <li class="open-contact"><a href="#">Kontakt</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <div class="sk-detail-main">
+                <nav class="sk-user-meta" aria-label="Benutzerfunktionen">
+                    <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ "cl=register" }) }}">Registrieren</a>
+                    <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ "cl=account" }) }}">Anmelden</a>
+                    <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ "cl=account_noticelist" }) }}">Merkliste</a>
+                </nav>
+                {% include "page/details/inc/fullproductinfo.html.twig" %}
+            </div>
+        </div>
+    </div>
+{% endif %}

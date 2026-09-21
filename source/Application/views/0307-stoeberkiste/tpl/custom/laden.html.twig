@@ -1,0 +1,59 @@
+{% capture append = "oxidBlock_content" %}
+    <div class="sk-laden-page">
+        <div class="image-top">
+            <img src="/out/stoeberkiste/img/header-laden.jpg" alt="Stoeberkiste Laden">
+        </div>
+
+        <nav class="on-page-navi" aria-label="Laden Navigation">
+            <a href="#first">Start</a>
+            <a href="#second">Aktionen</a>
+            <a href="#third">Anfahrt</a>
+            <a href="#fourth">Kontakt</a>
+        </nav>
+
+        <section class="story about-us" id="first">
+            <h1>Ueber uns</h1>
+            {% ifcontent ident "laden_einleitung" set oCont %}
+                {{ oCont.oxcontents__oxcontent.value|raw }}
+            {% endifcontent %}
+        </section>
+
+        <section class="cms story aktionen-laden2" id="second">
+            <h1>Aktionen im Laden</h1>
+            {% ifcontent ident "laden_aktion" set oCont %}
+                {{ oCont.oxcontents__oxcontent.value|raw }}
+            {% endifcontent %}
+        </section>
+
+        <section class="story anfahrt-laden" id="third">
+            <h1>Anfahrt - Ihr Weg zur Maerkischen Str. 114, Wuppertal</h1>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d19962.271039751573!2d7.208757888548667!3d51.28749974248787!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b928059130366d%3A0xe74be420e2816fd5!2sM%C3%A4rkische+Str.+114%2C+42281+Wuppertal!5e0!3m2!1sde!2sde!4v1415093804239"
+                    width="100%" height="350" style="border:0" loading="lazy"></iframe>
+            <div class="left">
+                <h1>...mit dem Auto:</h1>
+                <p>Sie erreichen uns am einfachsten ueber die Autobahn A 46, Ausfahrt "Wichlinghausen", dann geradeaus. Die Strasse geht ueber in die Maerkische Strasse. Nach der grossen Kurve auf der linken Seite. Parkplaetze vor dem Geschaeft und auf der gegenueberliegenden Strassenseite.</p>
+            </div>
+            <div class="right">
+                <h1>...mit oeffentlichen Verkehrsmitteln:</h1>
+                <p>Autobuslinie 332.<br>Die Haltestelle "Vockendahl" befindet sich unmittelbar vor dem Geschaeft, wenn man aus Richtung Stadtmitte kommt. Die Buslinie faehrt ab "Barmer Bahnhof" bzw. "Alter Markt".</p>
+            </div>
+        </section>
+
+        <section class="story last-story kontakt-laden" id="fourth">
+            <h1>Kontakt</h1>
+            <div class="left">
+                {% ifcontent ident "laden_kontakt" set oCont %}
+                    {{ oCont.oxcontents__oxcontent.value|raw }}
+                {% endifcontent %}
+            </div>
+            <div class="right">
+                <p>
+                    E-Mail: <a href="mailto:info@stoeberkiste-wuppertal.de">info@stoeberkiste-wuppertal.de</a><br>
+                    Telefon: (02 02) 52 40 28
+                </p>
+            </div>
+        </section>
+    </div>
+{% endcapture %}
+
+{% include "layout/page.html.twig" %}

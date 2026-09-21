@@ -1,0 +1,18 @@
+{% set skCheckoutStep = current|default(1) %}
+<ol class="sk-checkout-steps" aria-label="Bestellschritte">
+    <li{% if skCheckoutStep == 1 %} class="active"{% elseif skCheckoutStep > 1 %} class="done"{% endif %}>
+        <span>1</span> Warenkorb (Bestellmenge &auml;ndern, ausgew&auml;hlte Artikel entfernen)
+    </li>
+    <li{% if skCheckoutStep == 2 %} class="active"{% elseif skCheckoutStep > 2 %} class="done"{% endif %}>
+        <span>2</span> Versenden (Login, Rechnungs- und Lieferadresse w&auml;hlen)
+    </li>
+    <li{% if skCheckoutStep == 3 %} class="active"{% elseif skCheckoutStep > 3 %} class="done"{% endif %}>
+        <span>3</span> Bezahlen (Versandart und Zahlungsart ausw&auml;hlen)
+    </li>
+    <li{% if skCheckoutStep == 4 %} class="active"{% elseif skCheckoutStep > 4 %} class="done"{% endif %}>
+        <span>4</span> Bestellen (Bestellung ausf&uuml;hren)
+    </li>
+    <li{% if skCheckoutStep == 5 %} class="active"{% endif %}>
+        <span>5</span> Fertig (Bestellung ausgef&uuml;hrt)
+    </li>
+</ol>

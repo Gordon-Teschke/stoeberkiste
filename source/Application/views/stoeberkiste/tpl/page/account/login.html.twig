@@ -1,0 +1,55 @@
+{% set template_title = "LOGIN"|translate %}
+{% capture append = "oxidBlock_content" %}
+    <div class="all-user-settings sk-account-login">
+        <section class="story with-border" data-id="user-settings">
+            <h1>Mein Account</h1>
+            <h2>Jetzt anmelden</h2>
+
+            {% if oView.getAccountDeletionStatus() == true %}
+                {% set statusMessage = "DD_DELETE_MY_ACCOUNT_SUCCESS"|translate %}
+                {% include "message/success.html.twig" with {statusMessage: statusMessage} %}
+            {% endif %}
+
+            <div class="with-inputs">
+                <form name="login" action="{{ oViewConf.getSslSelfLink()|raw }}" method="post">
+                    {{ oViewConf.getHiddenSid()|raw }}
+                    {{ oViewConf.getNavFormParams()|raw }}
+                    <input type="hidden" name="fnc" value="login_noredirect">
+                    <input type="hidden" name="cl" value="{{ oViewConf.getActiveClassName() }}">
+                    <input type="hidden" name="tpl" value="{{ oViewConf.getActTplName() }}">
+                    <input type="hidden" name="oxloadid" value="{{ oViewConf.getActContentLoadId() }}">
+                    {% if oView.getArticleId() %}<input type="hidden" name="aid" value="{{ oView.getArticleId() }}">{% endif %}
+                    {% if oView.getProduct() %}
+                        {% set product = oView.getProduct() %}
+                        <input type="hidden" name="anid" value="{{ product.oxarticles__oxnid.value }}">
+                    {% endif %}
+
+                    <label for="loginUser">E-Mail Adresse:</label>
+                    <input id="loginUser" type="email" name="lgn_usr" autocomplete="username" required>
+
+                    <label for="loginPwd">{{ translate({ ident: "PASSWORD" }) }}:</label>
+                    <input id="loginPwd" type="password" name="lgn_pwd" autocomplete="current-password" required>
+
+                    {% if oView.showRememberMe() %}
+                    <div class="sk-login-remember">
+                        <label for="lgn_cook">{{ translate({ ident: "KEEP_LOGGED_IN" }) }}:</label>
+                        <input id="lgn_cook" class="chbox" type="checkbox" name="lgn_cook" value="1">
+                    </div>
+                    {% endif %}
+
+                    <button id="loginButton" type="submit" class="btn is-submit">{{ translate({ ident: "LOGIN" }) }}</button>
+                </form>
+
+                <div class="clearfix"></div>
+                <a id="openAccountLink" href="{{ seo_url({ ident: oViewConf.getSslSelfLink() ~ 'cl=register' }) }}" class="link" rel="nofollow">
+                    {{ translate({ ident: "OPEN_ACCOUNT" }) }}
+                </a><br>
+                <a id="forgotPasswordLink" href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=forgotpwd' }) }}" class="link" rel="nofollow">
+                    {{ translate({ ident: "FORGOT_PASSWORD" }) }}
+                </a>
+            </div>
+        </section>
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% include "layout/page.html.twig" %}

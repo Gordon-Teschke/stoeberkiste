@@ -1,0 +1,108 @@
+{% capture append = "oxidBlock_content" %}
+    {% set skFrontTop = '' %}
+    {% set skFrontTeaser = '' %}
+    {% set skFrontBottom = '' %}
+    {% ifcontent ident "frontpage_top" set oCont %}
+        {% set skFrontTop = oCont.oxcontents__oxcontent.value %}
+    {% endifcontent %}
+    {% ifcontent ident "frontpage_teaser" set oCont %}
+        {% set skFrontTeaser = oCont.oxcontents__oxcontent.value %}
+    {% endifcontent %}
+    {% ifcontent ident "frontpage_bottom" set oCont %}
+        {% set skFrontBottom = oCont.oxcontents__oxcontent.value %}
+    {% endifcontent %}
+
+    <div class="sk-frontpage" data-role="main">
+        <div id="top"></div>
+
+        <section class="welcome-top">
+            <div class="hello">
+                {% if skFrontTop %}
+                    {{ skFrontTop|raw }}
+                {% else %}
+                    <h1>Willkommen!</h1>
+                    <p>Design, Mode und Kunsthandwerk aus Skandinavien: In unserem Online-Shop finden Sie ausgesuchte Wohnaccessoires, Geschenke, Textilien und sch&ouml;ne Dinge f&uuml;r jeden Tag.</p>
+                    <p>Besuchen Sie unseren <a href="/Warm/">Shop</a> oder kommen Sie in unser <a href="/Laden/">Gesch&auml;ft</a> in Wuppertal.</p>
+                {% endif %}
+            </div>
+
+            <div class="teaser-top">
+                <strong></strong>
+                <a href="/Nach-Hersteller/Pia-Malmros/" class="ribbon">Pia Malmros</a>
+                <div class="teaser-top-title-bg"></div>
+                <span>
+                    {% if skFrontTeaser %}
+                        {{ skFrontTeaser|raw }}
+                    {% else %}
+                        Karten, Papierkunst und skandinavische Geschenkideen.
+                    {% endif %}
+                </span>
+                <img src="/out/stoeberkiste/img/teaser-top-default.jpg" alt="">
+            </div>
+            <div class="clearfix"></div>
+        </section>
+
+        <section class="all-tiles" aria-label="Shop-Kategorien">
+            <div class="tile">
+                <strong></strong>
+                <a href="/Warm/" class="ribbon red">Warm...</a>
+                <img src="/out/stoeberkiste/img/cat-warm.jpg" title="Warm" alt="Warm">
+            </div>
+            <div class="tile black">
+                <strong></strong>
+                <a href="/Weich/" class="ribbon">Weich...</a>
+                <img src="/out/stoeberkiste/img/cat-weich2.jpg" title="Weich" alt="Weich">
+            </div>
+            <div class="tile blue last-tile">
+                <strong></strong>
+                <a href="/Klar/" class="ribbon">Klar...</a>
+                <img src="/out/stoeberkiste/img/cat-klar.jpg" title="Klar" alt="Klar">
+            </div>
+            <div class="tile orange">
+                <strong></strong>
+                <a href="/Tierisch/" class="ribbon">Tierisch...</a>
+                <img src="/out/stoeberkiste/img/cat-tierisch.jpg" title="Tierisch" alt="Tierisch">
+            </div>
+            <div class="tile pink">
+                <strong></strong>
+                <a href="/Kunstvoll/" class="ribbon">Kunstvoll...</a>
+                <img src="/out/stoeberkiste/img/cat-kunstvoll.jpg" title="Kunstvoll" alt="Kunstvoll">
+            </div>
+            <div class="tile dark-red last-tile">
+                <strong></strong>
+                <a href="/Nach-Hersteller/Pia-Malmros/" class="ribbon">Pia Malmros...</a>
+                <img src="/out/stoeberkiste/img/cat-mia.jpg" title="Pia Malmros" alt="Pia Malmros">
+            </div>
+        </section>
+
+        <section class="roros">
+            <div class="cloud-text">
+                <img src="/out/stoeberkiste/img/cloud.png" alt="">
+                {% if skFrontBottom %}
+                    {{ skFrontBottom|raw }}
+                {% else %}
+                    <h3>R&oslash;ros Tweed</h3>
+                    <p>Aus Norwegen kommen Decken und Plaids, zu denen Fjellschafe die leichte, w&auml;rmende Wolle liefern. Weich und zugleich robust verbinden die Produkte traditionelle Weberei und modernes Design.</p>
+                    <p><a href="/Nach-Hersteller/Roros-Tweed/">Zu R&oslash;ros Tweed</a></p>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="brands">
+            <h3>Einige der Marken, die wir in unserem Shop f&uuml;hren</h3>
+            <div class="all-brands">
+                <a href="/Nach-Hersteller/Roros-Tweed/"><img src="/out/stoeberkiste/img/brand-roros.jpg" alt="Roros Tweed" id="roros-image"></a>
+                <a href="/Nach-Hersteller/Marimekko/"><img src="/out/stoeberkiste/img/brand-marimekko.jpg" alt="Marimekko"></a>
+                <a href="/Nach-Hersteller/Faerg-Form/"><img src="/out/stoeberkiste/img/brand-forg.jpg" alt="Faerg Form"></a>
+                <a href="/Nach-Hersteller/Holmegaard/"><img src="/out/stoeberkiste/img/brand-holme.jpg" alt="Holmegaard"></a>
+                <a href="/Nach-Hersteller/Livingly/"><img src="/out/stoeberkiste/img/brand-livingly.jpg" alt="Livingly"></a>
+            </div>
+        </section>
+
+        <div class="background"></div>
+    </div>
+
+    {{ insert_tracker() }}
+{% endcapture %}
+
+{% include "layout/page.html.twig" %}

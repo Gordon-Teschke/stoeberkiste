@@ -1,0 +1,73 @@
+{% capture append = "oxidBlock_pageBody" %}
+    {% if oView.showRDFa() %}
+        {% include "rdfa/rdfa.html.twig" %}
+    {% endif %}
+
+    {% block layout_header %}
+        {% include "layout/header.html.twig" with {active_step: active_step} %}
+    {% endblock %}
+
+    {% set skClassKey = oView.getClassKey() %}
+    {% set skAccountPage = skClassKey == 'account'
+        or skClassKey|slice(0, 8) == 'account_'
+        or skClassKey in ['register', 'forgotpwd'] %}
+
+    {% if skAccountPage %}
+        <div class="bg-white sk-account-hero sk-list-header">
+            <img src="/out/stoeberkiste/img/header-shop.jpg" alt="" class="sk-header-image">
+        </div>
+        <div id="wrapper" class="wrapper sk-account-wrapper">
+            <div class="container-xxl sk-account-shell">
+                {% include "widget/sidebar/shop_navigation.html.twig" %}
+                <main class="content sk-account-main">
+                    {% include "message/errors.html.twig" %}
+                    {% for key, oEr in Errors.loginBoxErrors %}
+                        <div class="alert alert-danger">
+                            <p id="errorBadLogin">{{ oEr.getOxMessage() }}</p>
+                        </div>
+                    {% endfor %}
+                    {% for _block in oxidBlock_content %}
+                        {{ _block|raw }}
+                    {% endfor %}
+                </main>
+            </div>
+        </div>
+    {% else %}
+        <div id="wrapper" class="wrapper{% if sidebar %} sidebar{{ sidebar }}{% endif %}">
+            {% if sidebar and sidebar != "Right" %}
+                <div class="{{ skClassKey }}">
+                    {% include "layout/sidebar.html.twig" %}
+                </div>
+            {% endif %}
+
+            <main class="content">
+                {% block content_main %}
+                    {% include "message/errors.html.twig" %}
+
+                    {% for key, oEr in Errors.loginBoxErrors %}
+                        <div class="alert alert-danger">
+                            <p id="errorBadLogin">{{ oEr.getOxMessage() }}</p>
+                        </div>
+                    {% endfor %}
+
+                    {% for _block in oxidBlock_content %}
+                        {{ _block|raw }}
+                    {% endfor %}
+                {% endblock %}
+            </main>
+
+            {% if sidebar and sidebar == "Right" %}
+                <div class="{{ skClassKey }}">
+                    {% include "layout/sidebar.html.twig" %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% include "layout/footer.html.twig" %}
+    {% block dd_layout_page_header_icon_menu_minibasket_list %}
+        {% include_dynamic "widget/minibasket/minibasket.html.twig" %}
+    {% endblock %}
+    {% block layout_init_social %}{% endblock %}
+{% endcapture %}
+{% include "layout/base.html.twig" %}

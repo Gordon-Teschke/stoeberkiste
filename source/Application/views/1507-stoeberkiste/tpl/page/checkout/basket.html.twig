@@ -1,0 +1,141 @@
+{% set template_title = "PAGE_TITLE_BASKET"|translate %}
+{% capture append = "oxidBlock_content" %}
+    {% set currency = oView.getActCurrency() %}
+    <div class="sk-checkout-hero" aria-hidden="true"></div>
+
+    <div class="container-xxl sk-basket-page">
+        {% block checkout_basket_main %}
+            {% if oView.isLowOrderPrice() %}
+                {% block checkout_basket_loworderprice_top %}
+                    <div class="alert alert-danger p-4">{{ translate({ ident: "MIN_ORDER_PRICE" }) }} {{ format_price(oxcmp_basket.getMinOrderPrice(), { currency: currency }) }}</div>
+                {% endblock %}
+            {% endif %}
+
+            {% if not oxcmp_basket.getProductsCount() %}
+                {% block checkout_basket_emptyshippingcart %}
+                    <div id="empty-basket-warning" class="sk-basket-empty">
+                        <h1>{{ translate({ ident: "BASKET_EMPTY" }) }}</h1>
+                        <a href="{{ oViewConf.getHomeLink()|raw }}" title="{{ oxcmp_shop.oxshops__oxtitleprefix.value }}" class="btn btn-highlight">
+                            {{ translate({ ident: "DD_BASKET_BACK_TO_SHOP" }) }}
+                        </a>
+                    </div>
+                {% endblock %}
+            {% else %}
+                <ol class="sk-checkout-steps">
+                    <li class="active"><span>1</span> Warenkorb (Bestellmenge &auml;ndern, ausgew&auml;hlte Artikel entfernen)</li>
+                    <li><span>2</span> Versenden (Login, Rechnungs- und Lieferadresse w&auml;hlen)</li>
+                    <li><span>3</span> Bezahlen (Versandart und Zahlungsart ausw&auml;hlen)</li>
+                    <li><span>4</span> Bestellen (Bestellung ausf&uuml;hren)</li>
+                    <li><span>5</span> Fertig (Bestellung ausgef&uuml;hrt)</li>
+                </ol>
+
+                <div class="sk-basket-next sk-basket-next-top">
+                    <form action="{{ oViewConf.getSslSelfLink()|raw }}" method="post">
+                        {{ oViewConf.getHiddenSid()|raw }}
+                        <input type="hidden" name="cl" value="user">
+                        <button type="submit" class="btn btn-highlight">Weiter zum n&auml;chsten Schritt</button>
+                    </form>
+                </div>
+
+                <form name="basket" id="basket_form" action="{{ oViewConf.getSelfActionLink()|raw }}" method="post" class="sk-basket-form">
+                    {{ oViewConf.getHiddenSid()|raw }}
+                    <input type="hidden" name="cl" value="basket">
+                    <input type="hidden" name="fnc" value="changebasket">
+                    <input type="hidden" name="CustomError" value="basket">
+
+                    {% set basketitemlist = oView.getBasketArticles() %}
+                    <table class="sk-basket-table">
+                        <thead>
+                            <tr>
+                                <th class="sk-basket-remove"></th>
+                                <th colspan="2" class="sk-basket-article">Artikel</th>
+                                <th class="sk-basket-amount">Menge</th>
+                                <th class="sk-basket-unit">Einzelpreis</th>
+                                <th class="sk-basket-vat">MwSt</th>
+                                <th class="sk-basket-total">Gesamtbetrag</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for basketindex, basketitem in oxcmp_basket.getContents() %}
+                                {% set basketproduct = basketitemlist[basketindex] %}
+                                {% set article = basketitem.getArticle() %}
+                                <tr class="sk-basket-item">
+                                    <td class="sk-basket-remove">
+                                        <input type="checkbox" name="aproducts[{{ basketindex }}][remove]" value="1" aria-label="{{ translate({ ident: "REMOVE" }) }} - {{ basketitem.getTitle()|striptags }}">
+                                    </td>
+                                    <td class="sk-basket-image">
+                                        {% if basketitem.getLink() %}<a href="{{ basketitem.getLink()|raw }}">{% endif %}
+                                            <img loading="lazy" src="{{ article.getIconUrl()|raw }}" alt="{{ basketitem.getTitle()|striptags }}" width="120" height="120">
+                                        {% if basketitem.getLink() %}</a>{% endif %}
+                                    </td>
+                                    <td class="sk-basket-title">
+                                        <a href="{{ basketitem.getLink()|raw }}">{{ basketitem.getTitle() }}</a>
+                                        <div>ArtNr.: {{ basketproduct.oxarticles__oxartnum.value }}</div>
+                                    </td>
+                                    <td class="sk-basket-amount">
+                                        <input type="text" name="aproducts[{{ basketindex }}][am]" value="{{ basketitem.getAmount() }}" aria-label="{{ translate({ ident: "QUANTITY" }) }} - {{ basketitem.getTitle()|striptags }}">
+                                    </td>
+                                    <td class="sk-basket-unit">{{ format_price(basketitem.getUnitPrice(), { currency: currency }) }}</td>
+                                    <td class="sk-basket-vat">{{ basketitem.getVatPercent() }}%</td>
+                                    <td class="sk-basket-total">{{ format_price(basketitem.getPrice(), { currency: currency }) }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="sk-basket-actions-row">
+                                <td class="sk-basket-remove">
+                                    <input type="checkbox" aria-hidden="true" tabindex="-1">
+                                </td>
+                                <td colspan="6">
+                                    <button type="submit" class="btn btn-highlight">Artikel entfernen</button>
+                                    <button type="submit" class="btn btn-highlight">Aktualisieren</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+
+                <div class="sk-basket-totals">
+                    {% if not oxcmp_basket.getDiscounts() %}
+                        <div><span>Summe Artikel (netto)</span><strong>{{ format_price(oxcmp_basket.getNettoSum(), { currency: currency }) }}</strong></div>
+                        {% for key, VATitem in oxcmp_basket.getProductVats(false) %}
+                            <div><span>zzgl. MwSt. {{ key }}%</span><strong>{{ format_price(VATitem, { currency: currency }) }}</strong></div>
+                        {% endfor %}
+                        <div><span>Summe Artikel (brutto)</span><strong>{{ format_price(oxcmp_basket.getBruttoSum(), { currency: currency }) }}</strong></div>
+                    {% endif %}
+                    {% set deliveryCost = oxcmp_basket.getDeliveryCost() %}
+                    <div><span>Versandkosten</span><strong>{% if deliveryCost %}{{ format_price(deliveryCost.getBruttoPrice(), { currency: currency }) }}{% else %}0,00 &euro;{% endif %}</strong></div>
+                    <div class="sk-basket-grand"><span>Gesamtbetrag</span><strong>{{ format_price(oxcmp_basket.getPrice(), { currency: currency }) }}</strong></div>
+                </div>
+
+                <div class="sk-basket-bottom">
+                    {% if oViewConf.getShowVouchers() %}
+                        <div class="sk-basket-voucher">
+                            <h2>Gutschein einl&ouml;sen</h2>
+                            <p>Wenn Sie einen Gutscheincode haben, tragen Sie diesen bitte hier ein:</p>
+                            <form name="voucher" action="{{ oViewConf.getSelfActionLink()|raw }}" method="post">
+                                {{ oViewConf.getHiddenSid()|raw }}
+                                <input type="hidden" name="cl" value="basket">
+                                <input type="hidden" name="fnc" value="addVoucher">
+                                <input type="hidden" name="CustomError" value="basket">
+                                <input type="text" name="voucherNr" id="input_voucherNr">
+                                <button type="submit" class="btn btn-highlight">Gutschein absenden</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    <div class="sk-basket-next">
+                        <form action="{{ oViewConf.getSslSelfLink()|raw }}" method="post">
+                            {{ oViewConf.getHiddenSid()|raw }}
+                            <input type="hidden" name="cl" value="user">
+                            <button type="submit" class="btn btn-highlight">Weiter zum n&auml;chsten Schritt</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+    </div>
+    {% if oView.isWrapping() %}
+        {% include "page/checkout/inc/wrapping.html.twig" %}
+    {% endif %}
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+{% include "layout/page.html.twig" %}

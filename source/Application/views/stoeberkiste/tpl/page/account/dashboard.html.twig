@@ -1,0 +1,39 @@
+{% set template_title = "MY_ACCOUNT"|translate %}
+{% capture append = "oxidBlock_content" %}
+    <div class="all-user-settings sk-account-dashboard">
+        <section class="story on-top">
+            <h1>Mein Konto</h1>
+            <h2>&Auml;ndern Sie hier die pers&ouml;nlichen Einstellungen Ihres Kontos</h2>
+
+            {% if oView.getAccountDeletionStatus() is same as(false) %}
+                {% set statusMessage = "DD_DELETE_MY_ACCOUNT_ERROR"|translate %}
+                {% include "message/error.html.twig" with {statusMessage: statusMessage} %}
+            {% endif %}
+
+            <div class="left">
+                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink() ~ 'cl=account_password' }) }}" class="btn">
+                    Pers&ouml;nliche Einstellungen
+                </a>
+                <p class="with-arrow"><span class="icon-arrow-right"></span>&Auml;ndern Sie ihr Kontopasswort</p>
+
+                <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink() ~ 'cl=account_user' }) }}" class="btn">
+                    Rechnungs- und Liefereinstellungen
+                </a>
+                <p class="with-arrow"><span class="icon-arrow-right"></span>Rechnungs- und Lieferadressen bearbeiten</p>
+            </div>
+
+            <div class="right">
+                <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=account_order' }) }}" class="btn">Bestellhistorie</a>
+                <p class="with-arrow"><span class="icon-arrow-right"></span>Bestellungen {{ oView.getOrderCnt() }}</p>
+
+                <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=account_noticelist' }) }}" class="btn">Mein Merkzettel</a>
+                <p class="with-arrow"><span class="icon-arrow-right"></span>Artikel auf Merkliste {% if oxcmp_user %}{{ oxcmp_user.getNoticeListArtCnt() }}{% else %}0{% endif %}</p>
+
+                <a href="{{ oViewConf.getLogoutLink()|raw }}" class="btn">Logout</a>
+                <p class="with-arrow"><span class="icon-arrow-right"></span>Vom Shop abmelden</p>
+            </div>
+        </section>
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% include "layout/page.html.twig" %}

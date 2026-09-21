@@ -1,0 +1,18 @@
+{% if oxcmp_basket.getProductsCount() and _newitem %}
+    {% hasrights { ident: "TOBASKET" } %}
+        <div class="msg" id="newItemMsg">
+            {% block dd_widget_minibasket_new_item_msg %}
+                <p>
+                    Artikel
+                    {% if _newitem.sTitle is defined %}
+                        {{ _newitem.sTitle }}
+                    {% endif %}
+                    wurde in den
+                    <a class="btn" rel="nofollow" href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ "cl=basket" }) }}">Warenkorb</a>
+                    gelegt.
+                </p>
+            {% endblock %}
+        </div>
+        <div class="elch"></div>
+    {% endhasrights %}
+{% endif %}

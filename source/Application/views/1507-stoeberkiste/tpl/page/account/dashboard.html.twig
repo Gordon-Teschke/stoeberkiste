@@ -1,0 +1,45 @@
+{% set template_title = "MY_ACCOUNT"|translate %}
+{% capture append = "oxidBlock_content" %}
+    <div class="container-xxl sk-account-dashboard">
+        <h1>Mein Konto</h1>
+        <p class="sk-account-lead">Ändern Sie hier die pers&ouml;nlichen Einstellungen Ihres Kontos</p>
+
+        {% if oView.getAccountDeletionStatus() is same as(false) %}
+            {% set statusMessage = "DD_DELETE_MY_ACCOUNT_ERROR"|translate %}
+            {% include "message/error.html.twig" with {statusMessage: statusMessage} %}
+        {% endif %}
+
+        <nav class="sk-account-actions" aria-label="Mein Konto">
+            <a class="sk-account-action" href="{{ seo_url({ ident: oViewConf.getSslSelfLink() ~ "cl=account_password" }) }}">
+                <span class="sk-account-action-title">Pers&ouml;nliche Einstellungen</span>
+                <span class="sk-account-action-text">&Auml;ndern Sie ihr Kontopasswort</span>
+            </a>
+
+            <a class="sk-account-action" href="{{ seo_url({ ident: oViewConf.getSslSelfLink() ~ "cl=account_user" }) }}">
+                <span class="sk-account-action-title">Rechnungs- und Liefereinstellungen</span>
+                <span class="sk-account-action-text">Rechnungs- und Lieferadressen bearbeiten</span>
+            </a>
+
+            <a class="sk-account-action" href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ "cl=account_order" }) }}">
+                <span class="sk-account-action-title">Bestellhistorie</span>
+                <span class="sk-account-action-text">Bestellungen {{ oView.getOrderCnt() }}</span>
+            </a>
+
+            <a class="sk-account-action" href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ "cl=account_noticelist" }) }}">
+                <span class="sk-account-action-title">Mein Merkzettel</span>
+                <span class="sk-account-action-text">Artikel auf Merkliste {% if oxcmp_user %}{{ oxcmp_user.getNoticeListArtCnt() }}{% else %}0{% endif %}</span>
+            </a>
+
+            <a class="sk-account-action" href="{{ oViewConf.getLogoutLink()|raw }}">
+                <span class="sk-account-action-title">Logout</span>
+                <span class="sk-account-action-text">Vom Shop abmelden</span>
+            </a>
+        </nav>
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+{% capture append = "oxidBlock_sidebar" %}
+    {% include "page/account/inc/account_menu.html.twig" %}
+{% endcapture %}
+{% include "layout/page.html.twig" %}

@@ -1,0 +1,97 @@
+{% block checkout_user_options %}
+    {% set skShowNoReg = oView.getShowNoRegOption() %}
+
+    {% block checkout_options_noreg %}
+        {% if skShowNoReg %}
+            <section class="sk-checkout-option sk-checkout-option--noreg user-option-one" aria-labelledby="sk-option-one-title">
+                <strong class="sk-checkout-option-number useroptboxhead">Option 1</strong>
+                <div class="sk-checkout-option-body useroptbox">
+                    <h2 id="sk-option-one-title">Einkaufen ohne Registrierung</h2>
+                    <p class="sk-checkout-option-note">(Ich m&ouml;chte kein Kundenkonto anlegen.)</p>
+
+                    {% if oView.isDownloadableProductWarning() %}
+                        <p class="errorMsg">{{ translate({ ident: "MESSAGE_DOWNLOADABLE_PRODUCT" }) }}</p>
+                    {% endif %}
+
+                    <form action="{{ oViewConf.getSslSelfLink()|raw }}" method="post" id="optionNoRegistration">
+                        {{ oViewConf.getHiddenSid()|raw }}
+                        {{ oViewConf.getNavFormParams()|raw }}
+                        <input type="hidden" name="cl" value="user">
+                        <input type="hidden" name="fnc" value="">
+                        <input type="hidden" name="option" value="1">
+                        <button id="test_UsrOpt1" class="btn btn-highlight" type="submit" name="send">
+                            Weiter
+                        </button>
+                    </form>
+                </div>
+            </section>
+        {% endif %}
+    {% endblock %}
+
+    {% block checkout_options_login %}
+        <section class="sk-checkout-option sk-checkout-option--login user-option-two" aria-labelledby="sk-option-two-title">
+            <strong class="sk-checkout-option-number useroptboxhead">Option {% if skShowNoReg %}2{% else %}1{% endif %}</strong>
+            <div class="sk-checkout-option-body useroptbox">
+                <h2 id="sk-option-two-title">Ich bin bereits Kunde</h2>
+                <p class="sk-checkout-option-note">Bitte melden Sie sich mit Ihrer E-Mail-Adresse oder Kundennummer und Ihrem Passwort hier an.</p>
+
+                {% for key, oEr in Errors.user|default([]) %}
+                    <div class="err">{{ oEr.getOxMessage() }}</div>
+                {% endfor %}
+
+                <form action="{{ oViewConf.getSslSelfLink()|raw }}" method="post" id="optionLogin" name="login">
+                    {{ oViewConf.getHiddenSid()|raw }}
+                    {{ oViewConf.getNavFormParams()|raw }}
+                    <input type="hidden" name="fnc" value="login_noredirect">
+                    <input type="hidden" name="cl" value="user">
+                    <input type="hidden" name="option" value="2">
+                    <input type="hidden" name="lgn_cook" value="0">
+                    <input type="hidden" name="CustomError" value="user">
+
+                    <label for="lgn_usr">E-Mail-Adresse</label>
+                    <input class="user-reg-input" id="lgn_usr" type="text" name="lgn_usr" autocomplete="email">
+
+                    <label for="lgn_pwd">Passwort</label>
+                    <input class="user-reg-input" id="lgn_pwd" type="password" name="lgn_pwd" autocomplete="current-password">
+
+                    <div class="sk-checkout-option-actions user-reg">
+                        <button id="test_UsrOpt2" class="btn btn-highlight" type="submit" name="send">Anmelden</button>
+                        <a id="test_UsrOpt2_forgotPwd" rel="nofollow" href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=forgotpwd' }) }}">
+                            Passwort vergessen
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    {% endblock %}
+
+    {% block checkout_options_reg %}
+        <section class="sk-checkout-option sk-checkout-option--register user-option-three" aria-labelledby="sk-option-three-title">
+            <strong class="sk-checkout-option-number useroptboxhead">Option {% if skShowNoReg %}3{% else %}2{% endif %}</strong>
+            <div class="sk-checkout-option-body useroptbox">
+                <h2 id="sk-option-three-title">Pers&ouml;nliches Kunden-Konto er&ouml;ffnen.</h2>
+                <p>Mit einem Kundenaccount haben Sie folgende Vorteile:</p>
+                <ul class="sk-account-benefits">
+                    <li>Verwaltung der Lieferadressen</li>
+                    <li>Pr&uuml;fung des Bestellstatus</li>
+                    <li>Bestellhistorie</li>
+                    <li>pers&ouml;nlicher Merkzettel</li>
+                    <li>pers&ouml;nliche Wunschliste</li>
+                    <li>Newsletter-Verwaltung</li>
+                    <li>Sonder- und Rabattaktionen</li>
+                </ul>
+
+                <form action="{{ oViewConf.getSslSelfLink()|raw }}" method="post" id="optionRegistration">
+                    {{ oViewConf.getHiddenSid()|raw }}
+                    {{ oViewConf.getNavFormParams()|raw }}
+                    <input type="hidden" name="cl" value="user">
+                    <input type="hidden" name="fnc" value="">
+                    <input type="hidden" name="option" value="3">
+                    <button id="test_UsrOpt3" class="btn btn-highlight" type="submit" name="send">
+                        Zur Anmeldung
+                    </button>
+                </form>
+            </div>
+        </section>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,94 @@
+{% capture append = "oxidBlock_content" %}
+    <link rel="stylesheet" href="{{ oViewConf.getBaseDir()|raw }}out/modules/coderevoke/out/src/css/revoke.css">
+
+    {% if not sent %}
+        <div class="sk-revoke-page">
+            <h1 class="page-header">{{ translate({ ident: "REVOKE_HEADER" }) }}</h1>
+
+            {% if not preview %}
+                <form class="form-horizontal sk-revoke-form" action="{{ seo_url({ ident: oViewConf.getSelfLink() }) }}" method="post">
+                    <input type="hidden" name="fnc" value="preview">
+                    <input type="hidden" name="cl" value="revoke">
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-5 req" for="article">{{ translate({ ident: "REVOKE_ARTICLE_LABEL" }) }}</label>
+                        <textarea class="form-control col-lg-7" name="article" id="article" rows="3" required>{{ formdata.article }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-5 req" for="ordered">{{ translate({ ident: "REVOKE_ORDERED_LABEL" }) }}</label>
+                        <input class="form-control col-lg-7" type="text" name="ordered" id="ordered" value="{{ formdata.ordered }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-5 req" for="ordernr">{{ translate({ ident: "REVOKE_ORDERNR_LABEL" }) }}</label>
+                        <input class="form-control col-lg-7" type="text" name="ordernr" id="ordernr" value="{{ formdata.ordernr }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-5 req" for="name">{{ translate({ ident: "REVOKE_NAME_LABEL" }) }}</label>
+                        <input class="form-control col-lg-7" type="text" name="name" id="name" value="{{ formdata.name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-5 req" for="email">{{ translate({ ident: "REVOKE_EMAIL_LABEL" }) }}</label>
+                        <input class="form-control col-lg-7" type="email" name="email" id="email" value="{{ formdata.email }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-5" for="address">{{ translate({ ident: "REVOKE_ADDRESS_LABEL" }) }}</label>
+                        <textarea class="form-control col-lg-7" name="address" id="address" rows="6">{{ formdata.address }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-5" for="message">{{ translate({ ident: "REVOKE_MESSAGE_LABEL" }) }}</label>
+                        <textarea class="form-control col-lg-7" name="message" id="message" rows="6">{{ formdata.message }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-5" for="submit"></label>
+                        <button type="submit" class="btn btn-primary">{{ translate({ ident: "REVOKE_SUBMIT_BUTTON" }) }}</button>
+                    </div>
+                </form>
+            {% else %}
+                <h2>{{ translate({ ident: "REVOKE_CONFIRM_TEXT" }) }}</h2>
+                <div id="revoke_wrap" class="sk-revoke-preview">
+                    <table class="table table-striped">
+                        <tr><th>{{ translate({ ident: "REVOKE_ARTICLE_LABEL" }) }}</th><td>{{ formdata.article|nl2br }}</td></tr>
+                        <tr><th>{{ translate({ ident: "REVOKE_ORDERED_LABEL" }) }}</th><td>{{ formdata.ordered|nl2br }}</td></tr>
+                        <tr><th>{{ translate({ ident: "REVOKE_ORDERNR_LABEL" }) }}</th><td>{{ formdata.ordernr|nl2br }}</td></tr>
+                        <tr><th>{{ translate({ ident: "REVOKE_NAME_LABEL" }) }}</th><td>{{ formdata.name|nl2br }}</td></tr>
+                        <tr><th>{{ translate({ ident: "REVOKE_EMAIL_LABEL" }) }}</th><td>{{ formdata.email|nl2br }}</td></tr>
+                        <tr><th>{{ translate({ ident: "REVOKE_ADDRESS_LABEL" }) }}</th><td>{{ formdata.address|nl2br }}</td></tr>
+                        <tr><th>{{ translate({ ident: "REVOKE_MESSAGE_LABEL" }) }}</th><td>{{ formdata.message|nl2br }}</td></tr>
+                    </table>
+
+                    <form class="sk-revoke-actions" action="{{ seo_url({ ident: oViewConf.getSelfLink() }) }}" method="post">
+                        <input type="hidden" name="cl" value="revoke">
+                        <input type="hidden" name="article" value="{{ formdata.article }}">
+                        <input type="hidden" name="ordered" value="{{ formdata.ordered }}">
+                        <input type="hidden" name="ordernr" value="{{ formdata.ordernr }}">
+                        <input type="hidden" name="name" value="{{ formdata.name }}">
+                        <input type="hidden" name="email" value="{{ formdata.email }}">
+                        <input type="hidden" name="address" value="{{ formdata.address }}">
+                        <input type="hidden" name="message" value="{{ formdata.message }}">
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-5" for="submit"></label>
+                            <button type="submit" onclick="document.getElementById('revoke_overlay').style.display='block'" class="btn btn-primary" name="fnc" value="submit">{{ translate({ ident: "REVOKE_CONFIRM_BUTTON" }) }}</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-5" for="return"></label>
+                            <button type="submit" class="btn btn-secondary" name="fnc" value="repeat">{{ translate({ ident: "REVOKE_CORRECT_BUTTON" }) }}</button>
+                        </div>
+                    </form>
+
+                    <div id="revoke_overlay"><div class="loader"></div></div>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endcapture %}
+
+{% set template_title = "REVOKE_HEADER"|translate %}
+{% include "layout/page.html.twig" with {title: template_title, location: template_title} %}

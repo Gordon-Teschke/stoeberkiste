@@ -1,0 +1,81 @@
+{% set template_title = "STEPS_SEND"|translate %}
+{% capture append = "oxidBlock_content" %}
+    {% set currency = oView.getActCurrency() %}
+
+    {% block checkout_user_errors %}
+        {% if oView.isLowOrderPrice() %}
+            {% block widget_minibasket_loworderprice_top %}
+                <div class="alert alert-danger p-4 mt-4">{{ translate({ ident: "MIN_ORDER_PRICE" }) }} {{ format_price(oxcmp_basket.getMinOrderPrice(), { currency: currency }) }}</div>
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+
+    <div class="sk-checkout-hero" aria-hidden="true"></div>
+    <div class="container-xxl sk-checkout-user-page">
+        <ol class="sk-checkout-steps">
+            <li><span>1</span> Warenkorb (Bestellmenge &auml;ndern, ausgew&auml;hlte Artikel entfernen)</li>
+            <li class="active"><span>2</span> Versenden (Login, Rechnungs- und Lieferadresse w&auml;hlen)</li>
+            <li><span>3</span> Bezahlen (Versandart und Zahlungsart ausw&auml;hlen)</li>
+            <li><span>4</span> Bestellen (Bestellung ausf&uuml;hren)</li>
+            <li><span>5</span> Fertig (Bestellung ausgef&uuml;hrt)</li>
+        </ol>
+
+        {% if not oView.getLoginOption() and not oxcmp_user %}
+            <div class="sk-checkout-login-options">
+                {% block checkout_user_main %}
+                    {% include "page/checkout/inc/options.html.twig" %}
+                {% endblock %}
+            </div>
+        {% else %}
+            {% block checkout_user %}
+                <div class="sk-checkout-user-form">
+                    <h1>Versenden</h1>
+                    <div class="sk-checkout-next sk-checkout-next-top">
+                        <button type="button" class="btn btn-highlight" data-sk-submit-user>Weiter zum n&auml;chsten Schritt</button>
+                    </div>
+
+                    {% block checkout_user_noregistration %}
+                        {% if oView.getLoginOption() == 1 %}
+                            <h2>{{ translate({ ident: "PURCHASE_WITHOUT_REGISTRATION" }) }}</h2>
+                            {% include "form/user_checkout_noregistration.html.twig" %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block checkout_user_registration %}
+                        {% if oView.getLoginOption() == 3 %}
+                            <h2>{{ translate({ ident: "OPEN_ACCOUNT" }) }}</h2>
+                            {% include "form/user_checkout_registration.html.twig" %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block checkout_user_change %}
+                        {% if oxcmp_user %}
+                            {% include "form/user_checkout_change.html.twig" %}
+                        {% endif %}
+                    {% endblock %}
+
+                    <div class="sk-checkout-next sk-checkout-next-bottom">
+                        <button type="button" class="btn btn-highlight" data-sk-submit-user>Weiter zum n&auml;chsten Schritt</button>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endif %}
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+
+{% capture append = "oxidBlock_pageScript" %}
+    <script>
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('[data-sk-submit-user]')) {
+                return;
+            }
+            var form = document.getElementById('user_form') || document.querySelector('form[name="order"]');
+            if (form) {
+                form.submit();
+            }
+        });
+    </script>
+{% endcapture %}
+
+{% include "layout/page.html.twig" with {active_step: 1} %}

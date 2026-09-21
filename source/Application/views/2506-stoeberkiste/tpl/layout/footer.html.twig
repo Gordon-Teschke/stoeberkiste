@@ -1,0 +1,99 @@
+{% block footer_main %}
+    <footer class="sk-footer footer">
+        <div class="container-xxl">
+            <div class="row footer-main-row">
+                <nav class="col-12 col-md-4" aria-labelledby="sk-footer-laden">
+                    <div id="sk-footer-laden" class="h4">Unser Laden</div>
+                    <ul>
+                        <li><a href="/Laden/">Unser Laden</a></li>
+                        <li><a href="/Laden/#second">Aktionen</a></li>
+                        <li><a href="/Laden/#third">Anfahrt</a></li>
+                        <li><a href="#sk-contact">Kontakt</a></li>
+                        <li><a href="/Impressum/">Impressum</a></li>
+                        <li><a href="/Datenschutz/">Datenschutz</a></li>
+                    </ul>
+                </nav>
+
+                <nav class="col-12 col-md-4" aria-labelledby="sk-footer-shop">
+                    <div id="sk-footer-shop" class="h4">Online-Shop</div>
+                    <ul>
+                        <li><a href="/Warm/">Warm...</a></li>
+                        <li><a href="/Weich/">Weich...</a></li>
+                        <li><a href="/Klar/">Klar...</a></li>
+                        <li><a href="/Tierisch/">Tierisch...</a></li>
+                        <li><a href="/Kunstvoll/">Kunstvoll...</a></li>
+                    </ul>
+                </nav>
+
+                <nav class="col-12 col-md-4" aria-labelledby="sk-footer-service">
+                    <div id="sk-footer-service" class="h4">Service</div>
+                    <ul>
+                        <li><a href="/Gutscheine/">Gutscheine</a></li>
+                        <li><a href="/Versand-Kosten/">Versand und Kosten</a></li>
+                        <li><a href="/Geschenkverpackung/">Geschenkverpackung</a></li>
+                        <li><a href="/AGB/">AGB</a></li>
+                        <li><a href="/Widerrufsrecht/">Widerrufsrecht</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="row footer-contact-row">
+                <div class="col-12 col-lg-7">
+                    <p>
+                        Bei Fragen helfen wir Ihnen gerne weiter: (02 02) 52 40 28<br>
+                        Montags - Freitags von 10 - 13 Uhr,<br>
+                        Montags - Freitags von 15 - 18.30 Uhr,<br>
+                        Samstags von 10 - 14.00 Uhr
+                    </p>
+                </div>
+                <div class="col-12 col-lg-5 sk-footer-logo">
+                    <a href="{{ oViewConf.getHomeLink()|raw }}">
+                        <img src="/out/stoeberkiste/img/logo-top.png" alt="{{ oxcmp_shop.oxshops__oxname.value }}">
+                    </a>
+                    <a href="https://www.facebook.com/stoeberkiste.wuppertal" target="_blank" rel="noopener">
+                        <img src="/out/stoeberkiste/img/fb.png" alt="Facebook" class="fb-bottom">
+                    </a>
+                    <p>Besuchen Sie uns auch auf Facebook!</p>
+                </div>
+            </div>
+        </div>
+
+        {% if oView.isPriceCalculated() %}
+            {% block layout_page_vatinclude %}
+                {% block footer_deliveryinfo %}
+                    {% ifcontent ident "oxdeliveryinfo" set oCont %}
+                        <div class="container-xxl">
+                            <div class="text-end">
+                                {% if oView.isVatIncluded() %}
+                                    <span class="vat-info-text">
+                                        * {{ translate({ ident: "PLUS_SHIPPING" }) }}
+                                        <a href="{{ oCont.getLink()|raw }}">{{ translate({ ident: "PLUS_SHIPPING2" }) }}</a>
+                                    </span>
+                                {% else %}
+                                    <span class="vat-info-text">
+                                        * {{ translate({ ident: "PLUS" }) }}
+                                        <a href="{{ oCont.getLink()|raw }}">{{ translate({ ident: "PLUS_SHIPPING2" }) }}</a>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endifcontent %}
+                {% endblock %}
+            {% endblock %}
+        {% endif %}
+
+        {% block dd_footer_copyright %}
+            {% ifcontent ident "oxstdfooter" set oCont %}
+                <div class="legal pt-4">
+                    <div class="container-xxl">
+                        {{ oCont.oxcontents__oxcontent.value|raw }}
+                    </div>
+                </div>
+            {% endifcontent %}
+        {% endblock %}
+    </footer>
+{% endblock %}
+
+{% if oView.isRootCatChanged() %}
+    {% include "form/privatesales/basketexcl.html.twig" %}
+{% endif %}

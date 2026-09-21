@@ -1,0 +1,85 @@
+{% capture append = "oxidBlock_content" %}
+    <div class="sk-frontpage" data-role="main">
+        <div id="top"></div>
+
+        <section class="welcome-top">
+            <div class="hello">
+                {% ifcontent ident "frontpage_top" set oCont %}
+                    {{ oCont.oxcontents__oxcontent.value|raw }}
+                {% endifcontent %}
+            </div>
+
+            <div class="teaser-top">
+                <strong></strong>
+                <a href="/Nach-Hersteller/Pia-Malmros/" class="ribbon">Pia Malmros</a>
+                <div class="teaser-top-title-bg"></div>
+                <span>
+                    {% ifcontent ident "frontpage_teaser" set oCont %}
+                        {{ oCont.oxcontents__oxcontent.value|raw }}
+                    {% endifcontent %}
+                </span>
+                <img src="/out/stoeberkiste/img/teaser-top-default.jpg" alt="">
+            </div>
+            <div class="clearfix"></div>
+        </section>
+
+        <section class="all-tiles" aria-label="Shop-Kategorien">
+            <div class="tile">
+                <strong></strong>
+                <a href="/Warm/" class="ribbon red">Warm...</a>
+                <img src="/out/stoeberkiste/img/cat-warm.jpg" title="Warm" alt="Warm">
+            </div>
+            <div class="tile black">
+                <strong></strong>
+                <a href="/Weich/" class="ribbon">Weich...</a>
+                <img src="/out/stoeberkiste/img/cat-weich2.jpg" title="Weich" alt="Weich">
+            </div>
+            <div class="tile blue last-tile">
+                <strong></strong>
+                <a href="/Klar/" class="ribbon">Klar...</a>
+                <img src="/out/stoeberkiste/img/cat-klar.jpg" title="Klar" alt="Klar">
+            </div>
+            <div class="tile orange">
+                <strong></strong>
+                <a href="/Tierisch/" class="ribbon">Tierisch...</a>
+                <img src="/out/stoeberkiste/img/cat-tierisch.jpg" title="Tierisch" alt="Tierisch">
+            </div>
+            <div class="tile pink">
+                <strong></strong>
+                <a href="/Kunstvoll/" class="ribbon">Kunstvoll...</a>
+                <img src="/out/stoeberkiste/img/cat-kunstvoll.jpg" title="Kunstvoll" alt="Kunstvoll">
+            </div>
+            <div class="tile dark-red last-tile">
+                <strong></strong>
+                <a href="/Nach-Hersteller/Pia-Malmros/" class="ribbon">Pia Malmros...</a>
+                <img src="/out/stoeberkiste/img/cat-mia.jpg" title="Pia Malmros" alt="Pia Malmros">
+            </div>
+        </section>
+
+        <section class="roros">
+            <div class="cloud-text">
+                <img src="/out/stoeberkiste/img/cloud.png" alt="">
+                {% ifcontent ident "frontpage_bottom" set oCont %}
+                    {{ oCont.oxcontents__oxcontent.value|raw }}
+                {% endifcontent %}
+            </div>
+        </section>
+
+        <section class="brands">
+            <h3>Einige der Marken, die wir in unserem Shop fuehren</h3>
+            <div class="all-brands">
+                <a href="/Nach-Hersteller/Roros-Tweed/"><img src="/out/stoeberkiste/img/brand-roros.jpg" alt="Roros Tweed" id="roros-image"></a>
+                <a href="/Nach-Hersteller/Marimekko/"><img src="/out/stoeberkiste/img/brand-marimekko.jpg" alt="Marimekko"></a>
+                <a href="/Nach-Hersteller/Faerg-Form/"><img src="/out/stoeberkiste/img/brand-forg.jpg" alt="Faerg Form"></a>
+                <a href="/Nach-Hersteller/Holmegaard/"><img src="/out/stoeberkiste/img/brand-holme.jpg" alt="Holmegaard"></a>
+                <a href="/Nach-Hersteller/Livingly/"><img src="/out/stoeberkiste/img/brand-livingly.jpg" alt="Livingly"></a>
+            </div>
+        </section>
+
+        <div class="background"></div>
+    </div>
+
+    {{ insert_tracker() }}
+{% endcapture %}
+
+{% include "layout/page.html.twig" %}

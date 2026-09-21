@@ -1,0 +1,54 @@
+{% capture append = "oxidBlock_content" %}
+    {% set oContent = oView.getContent() %}
+    {% set tpl = oViewConf.getActTplName() %}
+    {% set oxloadid = oViewConf.getActContentLoadId() %}
+    {% set template_title = oView.getTitle() %}
+
+    <div class="bg-white sk-content-header">
+        <img src="/out/stoeberkiste/img/header-shop.jpg" alt="" class="sk-header-image">
+    </div>
+
+    <div class="container-xxl sk-content-body">
+        <aside class="side-menu-complete sk-side-menu" aria-label="Shopnavigation">
+            <div class="shop-menu">
+                {{ include_widget({ cl: "oxwCategoryTree", cnid: oView.getCategoryId(), deepLevel: 0, noscript: 1, nocookie: 1 }) }}
+            </div>
+
+            <div class="shop-menu sk-brand-menu">
+                <ul class="all-brands">
+                    <li>Nach Marken</li>
+                    <li><a href="/Nach-Hersteller/Faerg-Form/">F&auml;rg &amp; Form</a></li>
+                    <li><a href="/Nach-Hersteller/Holmegaard/">Holmegaard</a></li>
+                    <li><a href="/Nach-Hersteller/Kay-Bojesen/">Kay Bojesen</a></li>
+                    <li><a href="/Nach-Hersteller/Kortkartellet/">Kortkartellet</a></li>
+                    <li><a href="/Nach-Hersteller/Livingly/">Livingly</a></li>
+                    <li><a href="/Nach-Hersteller/Marimekko/">Marimekko</a></li>
+                    <li><a href="/Nach-Hersteller/Pia-Malmros/">Pia Malmros</a></li>
+                    <li><a href="/Nach-Hersteller/Pluto-Produkter/">Pluto Produkter</a></li>
+                    <li><a href="/Nach-Hersteller/Roros-Tweed/">R&oslash;ros-Tweed</a></li>
+                </ul>
+            </div>
+
+            <div class="shop-info-menu">
+                <ul class="shop-info">
+                    <li><a href="/Versand-Kosten/">Versand und Kosten</a></li>
+                    <li><a href="/Widerrufsrecht/">Widerrufsrecht</a></li>
+                    <li><a href="/Impressum/">Impressum</a></li>
+                    <li><a href="/Datenschutz/">Datenschutz</a></li>
+                    <li class="open-contact"><a href="#">Kontakt</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="sk-content-main">
+            {% if not oContent.oxcontents__ddhidetitle.value %}
+                <h1>{{ template_title }}</h1>
+            {% endif %}
+            <article class="cmsContent pb-5">
+                {{ oView.getParsedContent() | sanitize_html }}
+            </article>
+        </div>
+    </div>
+    {{ insert_tracker({title: template_title}) }}
+{% endcapture %}
+{% include "layout/page.html.twig" %}
