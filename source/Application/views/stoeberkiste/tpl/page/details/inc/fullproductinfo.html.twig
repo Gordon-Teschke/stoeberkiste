@@ -2,17 +2,22 @@
     {% include "page/details/inc/productmain.html.twig" %}
 
     {% set oDetailsProduct = oView.getProduct() %}
-    <form id="contact-ajax-detail" method="post" action="#" class="product-mail sk-product-question">
-        <input type="hidden" name="action" value="contact">
+    <form id="contact-ajax-detail" method="post" action="{{ oViewConf.getSslSelfLink()|raw }}" class="product-mail sk-product-question needs-validation">
+        {{ oViewConf.getHiddenSid()|raw }}
+        <input type="hidden" name="fnc" value="send">
+        <input type="hidden" name="cl" value="contact">
+        <input type="hidden" name="editval[oxuser__oxlname]" value="-">
+        <input type="hidden" name="c_subject" value="Produktanfrage: {{ oDetailsProduct.oxarticles__oxtitle.value }} {{ oDetailsProduct.oxarticles__oxvarselect.value }} | Art.-Nr. {{ oDetailsProduct.oxarticles__oxartnum.value }}">
         <p>Haben Sie Fragen zu diesem Artikel? Schreiben Sie uns:</p>
         <input type="hidden" name="ArtikelName" value="{{ oDetailsProduct.oxarticles__oxtitle.value }} {{ oDetailsProduct.oxarticles__oxvarselect.value }}">
         <input type="hidden" name="ArtikelNr" value="{{ oDetailsProduct.oxarticles__oxartnum.value }}">
-        <input type="text" name="name" value="" placeholder="Ihr Name" class="small-input">
-        <input type="text" name="email" value="" placeholder="Ihre E-Mail Adresse" class="small-input right-input">
-        <textarea name="message" placeholder="Ihre Nachricht an uns..."></textarea>
-        <input type="checkbox" name="dsgvo1" id="dsgvo" class="sk-dsgvo-check">
-        <label for="dsgvo" class="sk-dsgvo-label">Ich habe die Datenschutzerklärung gelesen und erkläre mich mit der Speicherung und Verarbeitung meiner Daten durch diese Website zum Zweck der Kontaktaufnahme durch den Webseitenbetreiber einverstanden.</label>
-        <input type="submit" name="" value="Nachricht senden" class="btn" id="submit-product-detail">
+        <input type="text" name="editval[oxuser__oxfname]" value="" placeholder="Ihr Name" class="small-input" required>
+        <input type="email" name="editval[oxuser__oxusername]" value="" placeholder="Ihre E-Mail Adresse" class="small-input right-input" required>
+        <textarea name="c_message" placeholder="Ihre Nachricht an uns..." required></textarea>
+        <input type="checkbox" name="c_oegdproptin" value="1" id="dsgvo-product" class="sk-dsgvo-check" required>
+        <label for="dsgvo-product" class="sk-dsgvo-label">Ich habe die <a href="/Datenschutz/">Datenschutzerkl&auml;rung</a> gelesen und erkl&auml;re mich mit der Speicherung und Verarbeitung meiner Daten durch diese Website zum Zweck der Kontaktaufnahme durch den Webseitenbetreiber einverstanden.</label>
+        <div class="sk-product-question-response" role="status" aria-live="polite"></div>
+        <input type="submit" value="Nachricht senden" class="btn" id="submit-product-detail">
     </form>
 
     <!-- CMS -->

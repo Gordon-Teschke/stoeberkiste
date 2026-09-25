@@ -1,7 +1,7 @@
 {% block details_productmain_gallery_sliders %}
     {% set themeZoom = oViewConf.getViewThemeParam('productZoomType') %}
     {% if not themeZoom %}
-        {% include "page/details/inc/gallery/zoom/product_modal_zoom.html.twig" %}
+        {% include "page/details/inc/gallery/zoom/product_no_zoom.html.twig" %}
     {% else %}
         {% set filePath = oDetailsProduct.oxarticles__oxtemplate.value %}
 

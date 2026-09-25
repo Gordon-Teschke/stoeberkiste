@@ -131,48 +131,22 @@
                     {% endif %}
                 {% endblock %}
 
-                {% set blCanBuy = true %}
-
+                {% set blHasActiveSelections = false %}
                 {% if aVariantSelections and aVariantSelections.selections %}
-                    {% set blCanBuy = aVariantSelections.blPerfectFit %}
-                    {% if not blHasActiveSelections %}
-                        {% if not blCanBuy and not oDetailsProduct.isParentNotBuyable() %}
-                            {% set blCanBuy = true %}
+                    {% for oList in aVariantSelections.selections %}
+                        {% if oList.getActiveSelection() %}
+                            {% set blHasActiveSelections = true %}
                         {% endif %}
-                    {% endif %}
+                    {% endfor %}
                 {% endif %}
 
-                {# variants | md variants #}
-                {% block details_productmain_variantselections %}
-                    {% if aVariantSelections and aVariantSelections.selections %}
-                        {{ script({ include: "js/variants.min.js", priority: 11, dynamic: __oxid_include_dynamic }) }}
-
-                        <div id="variants" class="variant-dropdown">
-                            {# TODO: blHasActiveSelections is used nowhere - check if it can be removed #}
-                            {% set blHasActiveSelections = false %}
-                            {% for iKey, oList in aVariantSelections.selections %}
-                                {% if oList.getActiveSelection() %}
-                                    {% set blHasActiveSelections = true %}
-                                {% endif %}
-                                {% include "widget/product/selectbox.html.twig" with {oSelectionList: oList, iKey: iKey, blInDetails: true} %}
-                            {% endfor %}
-                        </div>
+                {% set blCanBuy = true %}
+                {% if aVariantSelections and aVariantSelections.selections %}
+                    {% set blCanBuy = aVariantSelections.blPerfectFit %}
+                    {% if not blHasActiveSelections and not blCanBuy and not oDetailsProduct.isParentNotBuyable() %}
+                        {% set blCanBuy = true %}
                     {% endif %}
-                {% endblock %}
-
-                {# selection lists #}
-                {% block details_productmain_selectlists %}
-                    {% if oViewConf.showSelectLists() %}
-                        {% set oSelections = oDetailsProduct.getSelections() %}
-                        {% if oSelections %}
-                            <div class="variant-dropdown" id="productSelections">
-                                {% for oList in oSelections %}
-                                    {% include "widget/product/selectbox.html.twig" with {blSubmitOnChange: false, oSelectionList: oList, sFieldName: "sel", iKey: loop.index0, blHideDefault: true, sSelType: "seldrop"} %}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                {% endblock %}
+                {% endif %}
 
                 {# article main info block #}
                 <div class="details-information mb-3 mb-md-5 small">
@@ -189,15 +163,6 @@
                             {% endblock %}
                         </div>
                     {% endif %}
-
-                    {# Delivery time #}
-                    {% block details_productmain_deliverytime %}
-                        {% hasrights { ident: "TOBASKET" } %}
-                            {% if oDetailsProduct.isBuyable() %}
-                                {% include "page/details/inc/deliverytime.html.twig" %}
-                            {% endif %}
-                        {% endhasrights %}
-                    {% endblock %}
 
                     {# Unit Price #}
                     {% hasrights { ident: "SHOWARTICLEPRICE" } %}
@@ -325,20 +290,60 @@
                 {% block details_productmain_tobasket %}
                     {% hasrights { ident: "TOBASKET" } %}
                         {% if not oDetailsProduct.isNotBuyable() %}
-                            <div class="tobasket-function input-group input-group-lg mb-3">
+                            <div class="tobasket-function sk-detail-qty-row">
                                 <span class="sk-qty-label">Menge:</span>
                                 <input type="text" class="sk-amount-input" id="amountToBasket" name="am" value="1" aria-label="{{ translate({ ident: "QUANTITY" }) }}">
-                                <button id="toBasket" type="submit"{% if not blCanBuy %} disabled{% endif %} class="btn btn-highlight">
-                                    {{ translate({ ident: "TO_CART" }) }}
-                                </button>
                             </div>
                         {% endif %}
                     {% endhasrights %}
                 {% endblock %}
 
+                {% block details_productmain_variantselections %}
+                    {% if aVariantSelections and aVariantSelections.selections %}
+                        <div id="variants" class="variant-dropdown sk-detail-variants">
+                            {% for iKey, oList in aVariantSelections.selections %}
+                                {% include "widget/product/selectbox.html.twig" with {oSelectionList: oList, iKey: iKey, blInDetails: true} %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+
+                {% block details_productmain_selectlists %}
+                    {% if oViewConf.showSelectLists() %}
+                        {% set oSelections = oDetailsProduct.getSelections() %}
+                        {% if oSelections %}
+                            <div class="variant-dropdown sk-detail-selections" id="productSelections">
+                                {% for oList in oSelections %}
+                                    {% include "widget/product/selectbox.html.twig" with {blSubmitOnChange: false, oSelectionList: oList, sFieldName: "sel", iKey: loop.index0, blHideDefault: true, sSelType: "seldrop"} %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endblock %}
+
+                {% block details_productmain_deliverytime %}
+                    {% hasrights { ident: "TOBASKET" } %}
+                        {% if oDetailsProduct.isBuyable() %}
+                            <div class="sk-detail-delivery-row">
+                                {% include "page/details/inc/deliverytime.html.twig" %}
+                            </div>
+                        {% endif %}
+                    {% endhasrights %}
+                {% endblock %}
+
+                {% hasrights { ident: "TOBASKET" } %}
+                    {% if not oDetailsProduct.isNotBuyable() %}
+                        <div class="sk-detail-cart-row">
+                            <button id="toBasket" type="submit"{% if not blCanBuy %} disabled{% endif %} class="btn btn-highlight">
+                                {{ translate({ ident: "TO_CART" }) }}
+                            </button>
+                        </div>
+                    {% endif %}
+                {% endhasrights %}
+
                 {% block details_productmain_productlinksselector %}
                     {% block details_productmain_productlinks %}
-                        <div class="row g-3 product-links mb-md-5">
+                        <div class="row g-3 product-links sk-notice-under-cart mb-md-5">
 
                             {% if oViewConf.getShowCompareList() %}
                                 <div class="col-6">
