@@ -3902,8 +3902,8 @@ body.cl-start .brands .all-brands a:focus {
     color: var(--sk-v3-red) !important;
 }
 
-body.cl-content .sk-content-main > h1,
-body.cl-content .sk-content-main #test_contentHeader {
+.sk-content-main.sk-cms-typography > h1,
+.sk-content-main.sk-cms-typography #test_contentHeader {
     float: none !important;
     margin: 14px 0 !important;
     color: var(--sk-v3-red) !important;
@@ -3912,7 +3912,7 @@ body.cl-content .sk-content-main #test_contentHeader {
     line-height: 36.4px !important;
 }
 
-body.cl-content .sk-content-main .cmsContent {
+.sk-content-main.sk-cms-typography .cmsContent {
     margin: 0 !important;
     color: var(--sk-v3-blue) !important;
     font-size: 18px !important;
@@ -3920,14 +3920,14 @@ body.cl-content .sk-content-main .cmsContent {
     line-height: 25.2px !important;
 }
 
-body.cl-content .sk-content-main .cmsContent > div,
-body.cl-content .sk-content-main .cmsContent li {
+.sk-content-main.sk-cms-typography .cmsContent > div,
+.sk-content-main.sk-cms-typography .cmsContent li {
     color: var(--sk-v3-blue) !important;
     font-size: 18px !important;
     line-height: 25.2px !important;
 }
 
-body.cl-content .sk-content-main .cmsContent p {
+.sk-content-main.sk-cms-typography .cmsContent p {
     float: none !important;
     margin: 0 0 20px !important;
     color: var(--sk-v3-blue) !important;
@@ -3935,7 +3935,7 @@ body.cl-content .sk-content-main .cmsContent p {
     line-height: 20px !important;
 }
 
-body.cl-content .sk-content-main .cmsContent h2 {
+.sk-content-main.sk-cms-typography .cmsContent h2 {
     margin: 0 !important;
     color: var(--sk-v3-blue) !important;
     font-size: 27px !important;
@@ -3943,7 +3943,7 @@ body.cl-content .sk-content-main .cmsContent h2 {
     line-height: 37.8px !important;
 }
 
-body.cl-content .sk-content-main .cmsContent h3 {
+.sk-content-main.sk-cms-typography .cmsContent h3 {
     margin: 0 !important;
     color: var(--sk-v3-blue) !important;
     font-size: 21px !important;
@@ -3951,21 +3951,144 @@ body.cl-content .sk-content-main .cmsContent h3 {
     line-height: 29.4px !important;
 }
 
-body.cl-content .sk-content-main .cmsContent a,
-body.cl-content .sk-content-main .cmsContent strong,
-body.cl-content .sk-content-main .cmsContent em,
-body.cl-content .sk-content-main .cmsContent span {
+.sk-content-main.sk-cms-typography .cmsContent a,
+.sk-content-main.sk-cms-typography .cmsContent strong,
+.sk-content-main.sk-cms-typography .cmsContent em,
+.sk-content-main.sk-cms-typography .cmsContent span {
     font-size: inherit !important;
     line-height: inherit !important;
 }
 
-body.cl-content .sk-content-main .cmsContent a {
+.sk-content-main.sk-cms-typography .cmsContent a {
     color: #000 !important;
 }
 
-body.cl-content .sk-content-main .cmsContent a:hover,
-body.cl-content .sk-content-main .cmsContent a:focus {
+.sk-content-main.sk-cms-typography .cmsContent a:hover,
+.sk-content-main.sk-cms-typography .cmsContent a:focus {
     color: var(--sk-v3-red) !important;
+}
+
+.sk-account-meta {
+    display: none;
+}
+
+@media (min-width: 1025px) {
+    .sk-header.header {
+        height: 145px !important;
+        min-height: 145px !important;
+    }
+
+    .sk-account-meta {
+        display: block;
+        width: 100%;
+        height: 25px;
+        background: #fff;
+    }
+
+    .sk-account-meta-inner {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 1024px;
+        height: 25px;
+        margin: 0 auto;
+    }
+
+    .sk-header .sk-account-zone {
+        position: static !important;
+        display: block;
+        max-width: 360px;
+    }
+}
+
+.sk-header .sk-account-zone .sk-account-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.sk-header .sk-account-zone .sk-account-links a {
+    display: block;
+    padding: 3px 10px;
+    border-left: 1px solid #c2c2c2;
+    background: transparent;
+    color: var(--sk-v3-blue);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 18px;
+    text-decoration: none;
+}
+
+.sk-header .sk-account-zone .sk-account-links a:first-child {
+    border-left: 0;
+}
+
+.sk-header .sk-account-zone .sk-account-links a:last-child {
+    padding-right: 0;
+}
+
+.sk-header .sk-account-zone .sk-account-links a:hover,
+.sk-header .sk-account-zone .sk-account-links a:focus {
+    color: var(--sk-v3-red);
+    text-decoration: underline;
+}
+
+.sk-account-links .badge {
+    min-width: 18px;
+    padding: 2px 5px;
+    border-radius: 9px;
+    background: var(--sk-v3-red);
+    color: #fff;
+    font-size: 11px;
+    line-height: 14px;
+    vertical-align: 1px;
+}
+
+.sk-mobile-account-zone {
+    display: none !important;
+}
+
+@media (max-width: 1024px) {
+    .sk-account-meta {
+        display: none !important;
+    }
+
+    .sk-mobile-account-zone {
+        display: block !important;
+        margin: 14px 0 0;
+        padding: 12px 0;
+        border-top: 1px solid #d3d3d3;
+        border-bottom: 1px solid #d3d3d3;
+    }
+
+    .sk-mobile-account-zone .sk-account-links {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .sk-mobile-account-zone .sk-account-links a {
+        flex: 1 1 auto;
+        padding: 8px 10px;
+        border-radius: 4px;
+        background: #ebe9e9;
+        color: var(--sk-v3-blue);
+        font-size: 14px;
+        line-height: 19px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .sk-mobile-account-zone .sk-account-links a:hover,
+    .sk-mobile-account-zone .sk-account-links a:focus {
+        background: var(--sk-v3-blue);
+        color: #fff;
+    }
 }
 
 #top.sk-back-to-top {

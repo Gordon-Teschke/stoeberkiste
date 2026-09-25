@@ -88,16 +88,6 @@
             {% include "widget/sidebar/shop_navigation.html.twig" %}
 
             <div class="sk-detail-main">
-                <nav class="sk-user-meta" aria-label="Benutzerfunktionen">
-                    {% if oxcmp_user %}
-                        <a href="{{ seo_url({ ident: oViewConf.getSslSelfLink() ~ 'cl=account' }) }}">Mein Konto</a>
-                        <a href="{{ oViewConf.getLogoutLink()|raw }}">Logout</a>
-                    {% else %}
-                        <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=register' }) }}">Registrieren</a>
-                        <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=account' }) }}">Anmelden</a>
-                    {% endif %}
-                    <a href="{{ seo_url({ ident: oViewConf.getSelfLink() ~ 'cl=account_noticelist' }) }}">Merkliste</a>
-                </nav>
                 {% include "page/details/inc/fullproductinfo.html.twig" %}
             </div>
         </div>

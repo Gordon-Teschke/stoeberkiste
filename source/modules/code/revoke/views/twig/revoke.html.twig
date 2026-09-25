@@ -1,9 +1,21 @@
-{% capture append = "oxidBlock_content" %}
-    <link rel="stylesheet" href="{{ oViewConf.getBaseDir()|raw }}out/modules/coderevoke/out/src/css/revoke.css">
+{% capture append = "oxidBlock_head" %}
+    <link rel="stylesheet" href="{{ oViewConf.getBaseDir()|raw }}out/modules/coderevoke/out/src/css/revoke.css?v=20260925-cmsheader2">
+{% endcapture %}
 
-    {% if not sent %}
-        <div class="sk-revoke-page">
-            <h1 class="page-header">{{ translate({ ident: "REVOKE_HEADER" }) }}</h1>
+{% capture append = "oxidBlock_content" %}
+    <div class="bg-white sk-content-header sk-list-header">
+        <img src="/out/stoeberkiste/img/header-shop.jpg" alt="" class="sk-header-image">
+    </div>
+
+    <div class="container-xxl sk-content-body sk-legacy-content-layout sk-revoke-layout">
+        {% include "widget/sidebar/shop_navigation.html.twig" %}
+
+        <section class="sk-content-main all-items page sk-cms-typography">
+            <h1 id="test_contentHeader" class="boxhead">{{ translate({ ident: "REVOKE_HEADER" }) }}</h1>
+            <div class="clearfix"></div>
+
+            <article id="test_contentBody" class="cmsContent box sk-revoke-page">
+            {% if not sent %}
 
             {% if not preview %}
                 <form class="form-horizontal sk-revoke-form" action="{{ seo_url({ ident: oViewConf.getSelfLink() }) }}" method="post">
@@ -45,7 +57,7 @@
                         <textarea class="form-control col-lg-7" name="message" id="message" rows="6">{{ formdata.message }}</textarea>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group sk-revoke-button-row">
                         <label class="control-label col-lg-5" for="submit"></label>
                         <button type="submit" class="btn btn-primary">{{ translate({ ident: "REVOKE_SUBMIT_BUTTON" }) }}</button>
                     </div>
@@ -73,11 +85,11 @@
                         <input type="hidden" name="address" value="{{ formdata.address }}">
                         <input type="hidden" name="message" value="{{ formdata.message }}">
 
-                        <div class="form-group">
+                        <div class="form-group sk-revoke-button-row">
                             <label class="control-label col-lg-5" for="submit"></label>
                             <button type="submit" onclick="document.getElementById('revoke_overlay').style.display='block'" class="btn btn-primary" name="fnc" value="submit">{{ translate({ ident: "REVOKE_CONFIRM_BUTTON" }) }}</button>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group sk-revoke-button-row">
                             <label class="control-label col-lg-5" for="return"></label>
                             <button type="submit" class="btn btn-secondary" name="fnc" value="repeat">{{ translate({ ident: "REVOKE_CORRECT_BUTTON" }) }}</button>
                         </div>
@@ -86,8 +98,10 @@
                     <div id="revoke_overlay"><div class="loader"></div></div>
                 </div>
             {% endif %}
-        </div>
-    {% endif %}
+            {% endif %}
+            </article>
+        </section>
+    </div>
 {% endcapture %}
 
 {% set template_title = "REVOKE_HEADER"|translate %}

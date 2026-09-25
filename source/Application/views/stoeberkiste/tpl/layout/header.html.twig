@@ -7,7 +7,21 @@
     {% if oxcmp_basket %}
         {% set basketCount = oxcmp_basket.getItemsCount() %}
     {% endif %}
+    {% if oxcmp_user or oView.getCompareItemCount() or Errors.loginBoxErrors %}
+        {% set blAnon = 0 %}
+        {% set force_sid = oView.getSidForWidget() %}
+    {% else %}
+        {% set blAnon = 1 %}
+    {% endif %}
     <header class="sk-header header">
+        <div class="sk-account-meta">
+            <div class="sk-account-meta-inner">
+                <div class="sk-account-zone">
+                    {{ include_widget({ cl: "oxwServiceMenu", _parent: oView.getClassKey(), force_sid: force_sid, nocookie: blAnon, _navurlparams: oViewConf.getNavUrlParams(), anid: oViewConf.getActArticleId() }) }}
+                </div>
+            </div>
+        </div>
+
         <div class="top-bar">
             <a href="{{ oViewConf.getHomeLink()|raw }}" class="logo-link">
                 <img src="/out/stoeberkiste/img/logo-top.png" alt="{{ oxcmp_shop.oxshops__oxname.value }}">
@@ -40,14 +54,6 @@
                         </div>
                     </div>
 
-                    {% if oxcmp_user or oView.getCompareItemCount() or Errors.loginBoxErrors %}
-                        {% set blAnon = 0 %}
-                        {% set force_sid = oView.getSidForWidget() %}
-                    {% else %}
-                        {% set blAnon = 1 %}
-                    {% endif %}
-                    {{ include_widget({ cl: "oxwServiceMenu", _parent: oView.getClassKey(), force_sid: force_sid, nocookie: blAnon, _navurlparams: oViewConf.getNavUrlParams(), anid: oViewConf.getActArticleId() }) }}
-
                     {% if oxcmp_basket.getProductsCount() %}
                         {% set blBasketAnon = 0 %}
                         {% set basket_force_sid = oView.getSidForWidget() %}
@@ -79,6 +85,10 @@
                     <li><a href="/Laden/">Unser Laden</a></li>
                     <li><a href="/Warm/">Shop</a></li>
                 </ul>
+
+                <div class="sk-mobile-account-zone">
+                    {{ include_widget({ cl: "oxwServiceMenu", _parent: oView.getClassKey(), force_sid: force_sid, nocookie: blAnon, _navurlparams: oViewConf.getNavUrlParams(), anid: oViewConf.getActArticleId() }) }}
+                </div>
 
                 <div class="sk-mobile-menu-gap"></div>
 
