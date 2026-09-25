@@ -4,7 +4,7 @@ $sLangName = "Deutsch";
 $aLang = [
     'charset' => 'UTF-8',
 	
-	'REVOKE_HEADER' => 'Vertrag widerrufen',
+	'REVOKE_HEADER' => 'Widerrufsformular',
     'REVOKE_ARTICLE_LABEL' => 'Hiermit widerrufe(n) ich/wir den von mir/uns abgeschlossenen Vertrag über den Kauf der folgenden Waren',
     'REVOKE_ORDERED_LABEL' => 'Bestellt am / Erhalten am',
     'REVOKE_ORDERNR_LABEL' => 'Bestellnummer / Rechnungsnummer',

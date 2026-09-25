@@ -124,25 +124,6 @@ body[class*="cl-account"] .addressCollumns textarea.form-control:focus {
     box-shadow: 0 0 0 1px var(--sk-v3-blue) inset !important;
 }
 
-@media (min-width: 1025px) {
-    body.cl-user.is-checkout .cart-fixed,
-    body.cl-account_user .cart-fixed,
-    body[class*="cl-account"] .cart-fixed {
-        position: fixed !important;
-        z-index: 999 !important;
-        top: 128px !important;
-        right: 0 !important;
-        bottom: auto !important;
-        left: auto !important;
-        width: 170px !important;
-        height: 260px !important;
-        margin: 0 !important;
-        padding: 60px 10px 0 26px !important;
-        background: url(../img/cart-fixed.png) no-repeat center center !important;
-        box-shadow: none !important;
-    }
-}
-
 @media (max-width: 767px) {
     body.cl-user.is-checkout h1:not(.mobile-title) {
         clear: both !important;
@@ -2305,72 +2286,6 @@ body.cl-start .welcome-top .hello p a {
     background-color: #9d0001 !important;
 }
 
-@media (min-width: 1400px) {
-    .cart-fixed {
-        top: auto !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        left: auto !important;
-        width: 170px !important;
-        height: 260px !important;
-        margin: 0 0 20% !important;
-        padding: 60px 10px 0 26px !important;
-        background: url(../img/cart-fixed.png) no-repeat center center !important;
-        box-shadow: none !important;
-    }
-
-    .cart-fixed .count-output {
-        position: static !important;
-        float: none !important;
-        width: 134px !important;
-        height: 32px !important;
-        margin: 0 0 6px !important;
-        padding: 0 !important;
-    }
-
-    .cart-fixed .count-output p {
-        float: left !important;
-        width: 100% !important;
-        height: 26.4px !important;
-        margin: 0 !important;
-        padding: 4px 0 0 !important;
-        font-size: 16px !important;
-        line-height: 22.4px !important;
-    }
-
-    .cart-fixed .sk-cart-actions {
-        position: static !important;
-        float: none !important;
-        display: block !important;
-        width: 134px !important;
-        height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    .cart-fixed .btn,
-    .cart-fixed .btn:hover,
-    .cart-fixed .btn:focus,
-    .cart-fixed .btn:active {
-        float: none !important;
-        display: block !important;
-        width: 134px !important;
-        height: 32.4px !important;
-        margin: 0 2px 6px 0 !important;
-        padding: 4px 14px 6px !important;
-    }
-
-    .cart-fixed .to-contact {
-        margin-top: 36px !important;
-    }
-	html body .is-checkout .cart-fixed a.to-contact,
-	html body .is-checkout .cart-fixed a.to-contact:hover,
-	html body .is-checkout .cart-fixed a.to-contact:focus,
-	html body .is-checkout .cart-fixed a.to-contact:active {
-		margin-top: 30px !important;
-	}
-}
-
 .sk-contact-submit-message {
     float: right !important;
     width: 500px !important;
@@ -2437,187 +2352,6 @@ body.cl-manufacturerlist .sk-pia-page .pagination .page-link:hover,
 body.cl-manufacturerlist .sk-pia-page .pagination .page-link:focus {
     background: #285479 !important;
     color: #fff !important;
-}
-
-@media (min-width: 1400px) {
-    html body .cart-fixed,
-    html body.cl-manufacturerlist .cart-fixed,
-    html body.cl-alist .cart-fixed,
-    html body.cl-details .cart-fixed,
-    html body.cl-content .cart-fixed,
-    html body.cl-tpl .cart-fixed {
-        position: fixed !important;
-        z-index: 999 !important;
-        top: auto !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        left: auto !important;
-        width: 170px !important;
-        height: 260px !important;
-        margin: 0 0 20vw !important;
-        padding: 60px 10px 0 26px !important;
-        background: url(../img/cart-fixed.png) no-repeat center center !important;
-        background-size: auto !important;
-        box-shadow: none !important;
-    }
-
-    html body .cart-fixed .count-output {
-        position: static !important;
-        float: none !important;
-        width: 134px !important;
-        height: 32px !important;
-        margin: 0 0 6px !important;
-        padding: 0 !important;
-    }
-
-    html body .cart-fixed .count-output p {
-        float: left !important;
-        width: 100% !important;
-        height: 26.4px !important;
-        margin: 0 !important;
-        padding: 4px 0 0 !important;
-        font-size: 16px !important;
-        line-height: 22.4px !important;
-    }
-
-    html body .cart-fixed .sk-cart-actions {
-        position: static !important;
-        float: none !important;
-        display: block !important;
-        width: 134px !important;
-        height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    html body .cart-fixed .btn,
-    html body .cart-fixed .btn:hover,
-    html body .cart-fixed .btn:focus,
-    html body .cart-fixed .btn:active {
-        float: none !important;
-        display: block !important;
-        width: 134px !important;
-        min-width: 0 !important;
-        height: 32.4px !important;
-        margin: 0 2px 6px 0 !important;
-        padding: 4px 14px 6px !important;
-    }
-
-    html body .cart-fixed .to-contact,
-    html body .cart-fixed .to-contact:hover,
-    html body .cart-fixed .to-contact:focus,
-    html body .cart-fixed .to-contact:active {
-        margin-top: 36px !important;
-    }
-	html body.is-checkout .cart-fixed .to-contact,
-	html body.is-checkout .cart-fixed .to-contact:hover,
-	html body.is-checkout .cart-fixed .to-contact:focus,
-	html body.is-checkout .cart-fixed .to-contact:active {
-		margin-top: 30px !important;
-	}
-
-}
-
-@media (min-width: 1400px) {
-    html body.cl-manufacturerlist .cart-fixed .count-output,
-    html body.cl-alist .cart-fixed .count-output,
-    html body.cl-details .cart-fixed .count-output,
-    html body.cl-content .cart-fixed .count-output,
-    html body.cl-tpl .cart-fixed .count-output {
-        position: static !important;
-        float: none !important;
-        width: 134px !important;
-        height: 32px !important;
-        margin: 0 0 6px !important;
-        padding: 0 !important;
-    }
-
-    html body.cl-manufacturerlist .cart-fixed .count-output p,
-    html body.cl-alist .cart-fixed .count-output p,
-    html body.cl-details .cart-fixed .count-output p,
-    html body.cl-content .cart-fixed .count-output p,
-    html body.cl-tpl .cart-fixed .count-output p {
-        float: left !important;
-        width: 100% !important;
-        height: 26.4px !important;
-        margin: 0 !important;
-        padding: 4px 0 0 !important;
-        font-size: 16px !important;
-        line-height: 22.4px !important;
-    }
-
-    html body.cl-manufacturerlist .cart-fixed .sk-cart-actions,
-    html body.cl-alist .cart-fixed .sk-cart-actions,
-    html body.cl-details .cart-fixed .sk-cart-actions,
-    html body.cl-content .cart-fixed .sk-cart-actions,
-    html body.cl-tpl .cart-fixed .sk-cart-actions {
-        position: static !important;
-        float: none !important;
-        display: block !important;
-        width: 134px !important;
-        height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    html body.cl-manufacturerlist .cart-fixed .btn,
-    html body.cl-manufacturerlist .cart-fixed .btn:hover,
-    html body.cl-manufacturerlist .cart-fixed .btn:focus,
-    html body.cl-manufacturerlist .cart-fixed .btn:active,
-    html body.cl-alist .cart-fixed .btn,
-    html body.cl-alist .cart-fixed .btn:hover,
-    html body.cl-alist .cart-fixed .btn:focus,
-    html body.cl-alist .cart-fixed .btn:active,
-    html body.cl-details .cart-fixed .btn,
-    html body.cl-details .cart-fixed .btn:hover,
-    html body.cl-details .cart-fixed .btn:focus,
-    html body.cl-details .cart-fixed .btn:active,
-    html body.cl-content .cart-fixed .btn,
-    html body.cl-content .cart-fixed .btn:hover,
-    html body.cl-content .cart-fixed .btn:focus,
-    html body.cl-content .cart-fixed .btn:active,
-    html body.cl-tpl .cart-fixed .btn,
-    html body.cl-tpl .cart-fixed .btn:hover,
-    html body.cl-tpl .cart-fixed .btn:focus,
-    html body.cl-tpl .cart-fixed .btn:active {
-        float: none !important;
-        display: block !important;
-        width: 134px !important;
-        min-width: 0 !important;
-        height: 32.4px !important;
-        margin: 0 2px 6px 0 !important;
-        padding: 4px 14px 6px !important;
-    }
-
-    html body.cl-manufacturerlist .cart-fixed .to-contact,
-    html body.cl-manufacturerlist .cart-fixed .to-contact:hover,
-    html body.cl-manufacturerlist .cart-fixed .to-contact:focus,
-    html body.cl-manufacturerlist .cart-fixed .to-contact:active,
-    html body.cl-alist .cart-fixed .to-contact,
-    html body.cl-alist .cart-fixed .to-contact:hover,
-    html body.cl-alist .cart-fixed .to-contact:focus,
-    html body.cl-alist .cart-fixed .to-contact:active,
-    html body.cl-details .cart-fixed .to-contact,
-    html body.cl-details .cart-fixed .to-contact:hover,
-    html body.cl-details .cart-fixed .to-contact:focus,
-    html body.cl-details .cart-fixed .to-contact:active,
-    html body.cl-content .cart-fixed .to-contact,
-    html body.cl-content .cart-fixed .to-contact:hover,
-    html body.cl-content .cart-fixed .to-contact:focus,
-    html body.cl-content .cart-fixed .to-contact:active,
-    html body.cl-tpl .cart-fixed .to-contact,
-    html body.cl-tpl .cart-fixed .to-contact:hover,
-    html body.cl-tpl .cart-fixed .to-contact:focus,
-    html body.cl-tpl .cart-fixed .to-contact:active {
-        margin-top: 36px !important;
-    }
-	html body.is-checkout .cart-fixed .to-contact,
-	html body.is-checkout .cart-fixed .to-contact:hover,
-	html body.is-checkout .cart-fixed .to-contact:focus,
-	html body.is-checkout .cart-fixed .to-contact:active {
-		margin-top: 30px !important;
-	}
-
 }
 
 footer.sk-legacy-footer {
@@ -4125,5 +3859,376 @@ body.cl-start .brands .all-brands a:focus {
     #top.sk-back-to-top[style*="display: block"],
     #top.sk-back-to-top[style*="display: inline-block"] {
         display: block !important;
+    }
+}
+
+/* Account, revoke and Laden follow-up: one layout source for shared elements. */
+@media (min-width: 1400px) {
+    html body[class] .cart-fixed {
+        position: fixed !important;
+        z-index: 999 !important;
+        top: auto !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: auto !important;
+        width: 170px !important;
+        height: 260px !important;
+        margin: 0 0 20vw !important;
+        padding: 60px 10px 0 26px !important;
+        background: url(../img/cart-fixed.png) no-repeat center center !important;
+        background-size: auto !important;
+        box-shadow: none !important;
+    }
+
+    html body[class] .cart-fixed .count-output,
+    html body[class] .cart-fixed .sk-cart-actions {
+        position: static !important;
+        float: none !important;
+        width: 134px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    html body[class] .cart-fixed .count-output {
+        height: 32px !important;
+        margin-bottom: 6px !important;
+    }
+
+    html body[class] .cart-fixed .sk-cart-actions {
+        display: block !important;
+        height: auto !important;
+    }
+
+    html body[class] .cart-fixed .btn,
+    html body[class] .cart-fixed .btn:hover,
+    html body[class] .cart-fixed .btn:focus,
+    html body[class] .cart-fixed .btn:active {
+        float: none !important;
+        display: block !important;
+        width: 134px !important;
+        min-width: 0 !important;
+        height: 32.4px !important;
+        margin: 0 2px 6px 0 !important;
+        padding: 4px 14px 6px !important;
+    }
+
+    html body[class] .cart-fixed .to-contact,
+    html body[class] .cart-fixed .to-contact:hover,
+    html body[class] .cart-fixed .to-contact:focus,
+    html body[class] .cart-fixed .to-contact:active {
+        margin-top: 36px !important;
+    }
+}
+
+body.cl-register .sk-account-register,
+body.cl-account_noticelist .sk-account-noticelist {
+    width: 724px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+body.cl-register .sk-account-register section.story,
+body.cl-account_noticelist .sk-account-noticelist section.story {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 0 34px !important;
+}
+
+body.cl-register .sk-account-register h1,
+body.cl-account_noticelist .sk-account-noticelist h1 {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 0 16px !important;
+    color: var(--sk-v3-red) !important;
+    font-size: 30px !important;
+    font-weight: 300 !important;
+    line-height: 38px !important;
+}
+
+body.cl-register .sk-account-register h2 {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 0 12px !important;
+    color: var(--sk-v3-red) !important;
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    line-height: 30px !important;
+}
+
+.sk-account-register .sk-register-form > .card,
+.sk-account-register .sk-register-form form,
+.sk-account-register .sk-register-form .card-body,
+.sk-account-register .sk-register-form .max-600 {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+@media (min-width: 768px) {
+    .sk-account-register .sk-register-form .row,
+    .sk-account-register .sk-register-form .row > [class*="col"] {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating {
+        display: grid !important;
+        grid-template-columns: 280px minmax(0, 400px) 18px !important;
+        column-gap: 10px !important;
+        align-items: center !important;
+        width: 100% !important;
+        max-width: 708px !important;
+        min-height: 40px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating > label {
+        position: static !important;
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: var(--sk-v3-red) !important;
+        font-size: 16px !important;
+        line-height: 22px !important;
+        transform: none !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating > label::after {
+        content: none !important;
+        display: none !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating > input.form-control,
+    .sk-account-register .sk-register-form .form-floating > select.form-select {
+        position: static !important;
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        width: 400px !important;
+        max-width: 100% !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        margin: 0 0 6px !important;
+        padding: 5px 8px !important;
+        border: 1px solid var(--sk-v3-blue) !important;
+        border-radius: 0 !important;
+        background: #fff !important;
+        color: #111 !important;
+        font-size: 16px !important;
+        line-height: 22px !important;
+        box-shadow: none !important;
+    }
+
+    .sk-account-register .sk-register-form .form-check {
+        width: 400px !important;
+        max-width: 400px !important;
+        margin: 2px 0 12px 290px !important;
+    }
+
+    .sk-account-register .sk-register-form .form-check-input {
+        float: left !important;
+        display: block !important;
+        flex: 0 0 15px !important;
+        width: 15px !important;
+        min-width: 15px !important;
+        max-width: 15px !important;
+        height: 15px !important;
+        min-height: 15px !important;
+        margin: 3px 7px 0 0 !important;
+        padding: 0 !important;
+    }
+
+    .sk-account-register .sk-register-form .req-warning {
+        margin-left: 290px !important;
+    }
+
+    .sk-account-register .sk-register-form #accUserSaveTop {
+        float: right !important;
+        margin-right: 34px !important;
+    }
+}
+
+.sk-account-noticelist .sk-account-notice-empty {
+    display: inline-block !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 12px 16px !important;
+}
+
+.sk-account-noticelist .sk-account-notice-empty p {
+    margin: 0 !important;
+}
+
+.sk-account-notice-products .list-container,
+.sk-account-notice-products .line-view {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+body.cl-tpl .sk-laden-page .story a.btn {
+    display: inline !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--sk-v3-blue) !important;
+    font: inherit !important;
+    line-height: inherit !important;
+    text-decoration: underline !important;
+    box-shadow: none !important;
+}
+
+body.cl-tpl .sk-laden-page .story a.btn:hover,
+body.cl-tpl .sk-laden-page .story a.btn:focus {
+    background: transparent !important;
+    color: var(--sk-v3-red) !important;
+}
+
+body.cl-tpl .sk-laden-page .on-page-navi a:hover,
+body.cl-tpl .sk-laden-page .on-page-navi a:focus,
+body.cl-tpl .sk-laden-page .kontakt-laden input[type="submit"]:hover,
+body.cl-tpl .sk-laden-page .kontakt-laden input[type="submit"]:focus {
+    color: #fff !important;
+}
+
+@media (min-width: 1025px) {
+    body.cl-tpl .sk-laden-page .image-top {
+        width: calc(100vw - 15px) !important;
+        margin-left: calc(-50vw + 7.5px) !important;
+    }
+}
+
+@media (max-width: 767px) {
+    body.cl-register .sk-account-register,
+    body.cl-account_noticelist .sk-account-noticelist {
+        width: 100% !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating > label {
+        position: static !important;
+        display: block !important;
+        height: auto !important;
+        margin: 0 0 4px !important;
+        padding: 0 !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating > input.form-control,
+    .sk-account-register .sk-register-form .form-floating > select.form-select {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 38px !important;
+        min-height: 38px !important;
+        margin: 0 0 10px !important;
+        padding: 7px 8px !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    body.cl-account .sk-account-login .sk-login-remember {
+        display: block !important;
+        clear: both !important;
+        width: 100% !important;
+        min-height: 43px !important;
+        margin: 0 !important;
+    }
+
+    body.cl-account .sk-account-login .sk-login-remember label {
+        float: left !important;
+        clear: both !important;
+    }
+
+    body.cl-account .sk-account-login .sk-login-remember input[type="checkbox"] {
+        float: left !important;
+        width: 15px !important;
+        min-width: 15px !important;
+        height: 15px !important;
+        margin: 7px 0 12px !important;
+    }
+
+    body.cl-account .sk-account-login .with-inputs button {
+        clear: both !important;
+    }
+
+    body.cl-account.is-logged-in .sk-account-dashboard section.story .left .btn,
+    body.cl-account.is-logged-in .sk-account-dashboard section.story .right .btn {
+        display: inline-block !important;
+        width: auto !important;
+        min-width: 0 !important;
+        text-align: left !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .sk-account-register .sk-register-form .form-floating {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating > label {
+        order: 1 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating > input.form-control,
+    .sk-account-register .sk-register-form .form-floating > select.form-select {
+        order: 2 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-floating > .invalid-feedback {
+        order: 3 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-check {
+        display: grid !important;
+        grid-template-columns: 15px minmax(0, 1fr) !important;
+        column-gap: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 2px 0 14px !important;
+        padding: 0 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-check-input {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        float: none !important;
+        width: 15px !important;
+        min-width: 15px !important;
+        max-width: 15px !important;
+        height: 15px !important;
+        min-height: 15px !important;
+        margin: 3px 0 0 !important;
+        padding: 0 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-check-label {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        width: auto !important;
+        margin: 0 !important;
+    }
+
+    .sk-account-register .sk-register-form .form-check p {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        margin: 3px 0 0 !important;
     }
 }
